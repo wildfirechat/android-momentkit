@@ -13,7 +13,6 @@ import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
 import cn.wildfirechat.chat.R;
 import cn.wildfirechat.message.Message;
 import cn.wildfirechat.moment.MomentClient;
-import cn.wildfirechat.moment.model.Feed;
 import cn.wildfirechat.remote.ChatManager;
 
 public class FeedMessageActivity extends BaseTitleBarActivity implements OnFeedUserClickListener, FeedMessagAdapter.OnFeedMessageLongClickListener, FeedMessagAdapter.OnFeedMessageClickListener, FeedMessagAdapter.OnLoadMoreMessageClickListener {
@@ -63,36 +62,16 @@ public class FeedMessageActivity extends BaseTitleBarActivity implements OnFeedU
 
     @Override
     public void onFeedMessageClick(long feedId) {
-//        FeedDetailActivity.feed = mFriendCircleAdapter.getmFriendCircleBeans().get(feedPosition);
-//        Intent intent = new Intent(this, FeedDetailActivity.class);
-//        startActivity(intent);
-        MomentClient.getInstance().getFeed(feedId, new MomentClient.GetFeedCallback() {
-            @Override
-            public void onSuccess(Feed feed) {
-
-            }
-
-            @Override
-            public void onFailure(int errorCode) {
-
-            }
-        });
+        Intent intent = new Intent(this, FeedDetailActivity.class);
+        intent.putExtra("feedId", feedId);
+        startActivity(intent);
     }
 
     @Override
     public void onFeedCommentMessageClick(long feedId, long commentId) {
-        // TODO show feed detail
-        MomentClient.getInstance().getFeed(feedId, new MomentClient.GetFeedCallback() {
-            @Override
-            public void onSuccess(Feed feed) {
-
-            }
-
-            @Override
-            public void onFailure(int errorCode) {
-
-            }
-        });
+        Intent intent = new Intent(this, FeedDetailActivity.class);
+        intent.putExtra("feedId", feedId);
+        startActivity(intent);
     }
 
     @Override
