@@ -16,7 +16,7 @@
       //            java.srcDirs += ['../../android-momentkit/src/main/java']
       //            res.srcDirs += ['../../android-momentkit/src/main/res-moment']
       
-      //    implementation project(':momentclient')
+      //    implementation project(':momentclient') //和步骤3相关
       //    api 'me.everything:overscroll-decor-android:1.0.4'
       ```
 
