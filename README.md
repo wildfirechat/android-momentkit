@@ -36,3 +36,6 @@
       
       ```
 
+## 感谢
+
+本项目基于[HighPerformanceFriendsCircle](https://github.com/Micrason/HighPerformanceFriendsCircle)和[MultiWeChat](https://github.com/MsPenghao/MultiWeChat)开发，在此，对他们的无私奉献表示感谢。
