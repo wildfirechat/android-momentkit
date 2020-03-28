@@ -39,7 +39,7 @@ public class CommentUserSpan extends ClickableSpan {
     public void updateDrawState(TextPaint ds) {
         super.updateDrawState(ds);
         ds.bgColor = mPressed ? ContextCompat.getColor(mContext, R.color.base_B5B5B5) : Color.TRANSPARENT;
-        ds.setColor(ContextCompat.getColor(mContext, R.color.base_697A9F));
+        ds.setColor(ContextCompat.getColor(mContext, R.color.blue3));
         ds.setUnderlineText(false);
     }
 

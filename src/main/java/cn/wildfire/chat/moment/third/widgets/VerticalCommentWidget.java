@@ -189,9 +189,9 @@ public class VerticalCommentWidget extends LinearLayout implements ViewGroup.OnH
 
     private TextView makeContentTextView(SpannableStringBuilder content, int index) {
         TextView textView = new TextView(getContext());
-        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.base_333333));
+        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.black3));
         textView.setBackgroundResource(R.drawable.selector_view_name_state);
-        textView.setTextSize(16f);
+        textView.setTextSize(14f);
         textView.setLineSpacing(mCommentVerticalSpace, 1f);
         textView.setText(content);
         textView.setMovementMethod(LinkMovementMethod.getInstance());

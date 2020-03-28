@@ -25,7 +25,7 @@ public class TitleBarAlphaChangeHelper {
     private View scrolledTarget;
     private View target;
     private int scrolledAlphaCriticalOffset;
-    private int fullAlphaBackgroundColor = Color.parseColor("#EBE9E6");
+    private int fullAlphaBackgroundColor = Color.parseColor("#EDEDED");
     private int[] fullAlphaBackgroundColorSplit = new int[4];
     private final int statusBarHeight;
     private int defaultTitleBarColor;
