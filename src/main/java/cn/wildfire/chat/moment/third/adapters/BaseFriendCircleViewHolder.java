@@ -11,9 +11,13 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
+import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
 import cn.wildfire.chat.moment.third.beans.OtherInfoBean;
 import cn.wildfire.chat.moment.third.beans.PraiseBean;
@@ -47,6 +51,8 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
 
     private Context mContext;
     private CommentOrPraisePopupWindow mCommentOrPraisePopupWindow;
+    private RequestOptions mRequestOptions = new RequestOptions()
+            .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(10)));
 
     public BaseFriendCircleViewHolder(View itemView) {
         super(itemView);
@@ -101,8 +107,7 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
                 Glide.with(mContext).load(userBean.getUserAvatarUrl())
-//                        .apply(mRequestOptions.override(mAvatarSize, mAvatarSize))
-//                        .transition(mDrawableTransitionOptions)
+                        .apply(mRequestOptions)
                         .into(holder.imgAvatar);
             }
 

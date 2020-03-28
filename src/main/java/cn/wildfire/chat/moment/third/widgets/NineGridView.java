@@ -40,7 +40,7 @@ public class NineGridView extends ViewGroup implements ViewGroup.OnHierarchyChan
         setOnHierarchyChangeListener(this);
         IMAGE_POOL = new SimpleWeakObjectPool<>(5);
         mSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                4f, context.getResources().getDisplayMetrics());
+                5f, context.getResources().getDisplayMetrics());
     }
 
     private int mSingleWidth;

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wildfire.chat.kit.mm.MMPreviewActivity;
+import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.moment.third.Constants;
 import cn.wildfire.chat.moment.third.beans.CommentBean;
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
@@ -52,6 +55,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<FriendCircleBean> mFriendCircleBeans;
 
     private RequestOptions mRequestOptions;
+    private RequestOptions mAvatarRequestOptions;
 
     private int mAvatarSize;
 
@@ -87,6 +91,9 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mAvatarSize = Utils.dp2px(44f);
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRequestOptions = new RequestOptions().centerCrop();
+        this.mAvatarRequestOptions = new RequestOptions()
+                .placeholder(UIUtils.getRoundedDrawable(R.mipmap.default_header, 13))
+                .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(13)));
         this.mDrawableTransitionOptions = DrawableTransitionOptions.withCrossFade();
         if (context instanceof OnPraiseOrCommentClickListener) {
             this.mOnPraiseOrCommentClickListener = (OnPraiseOrCommentClickListener) context;
@@ -290,7 +297,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 } else if (holder instanceof WordAndImagesViewHolder) {
                     WordAndImagesViewHolder wordAndImagesViewHolder = (WordAndImagesViewHolder) holder;
                     wordAndImagesViewHolder.nineGridView.setOnImageClickListener((position1, view) ->
-                    MMPreviewActivity.startActivity(mContext, friendCircleBean.getMediaEntries(), position1));
+                            MMPreviewActivity.startActivity(mContext, friendCircleBean.getMediaEntries(), position1));
                     wordAndImagesViewHolder.nineGridView.setAdapter(new NineImageAdapter(mContext, mRequestOptions,
                             mDrawableTransitionOptions, friendCircleBean.getMediaEntries()));
                 }
@@ -326,7 +333,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
                 });
                 Glide.with(mContext).load(userBean.getUserAvatarUrl())
-                        .apply(mRequestOptions.override(mAvatarSize, mAvatarSize))
+                        .apply(mAvatarRequestOptions.override(mAvatarSize, mAvatarSize))
                         .transition(mDrawableTransitionOptions)
                         .into(holder.imgAvatar);
             }

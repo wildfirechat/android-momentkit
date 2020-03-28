@@ -1,9 +1,12 @@
 package cn.wildfire.chat.moment.third.utils;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
 
 import androidx.core.content.ContextCompat;
 
@@ -26,6 +29,7 @@ public class SpanUtils {
         SpannableStringBuilder builder = new SpannableStringBuilder(richText);
         if (!TextUtils.isEmpty(childUserName)) {
             builder.setSpan(new CommentUserSpan(context, childUserId, childUserName, listener), 0, childUserName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.setSpan(new StyleSpan(Typeface.BOLD), 0, childUserName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return builder;
     }

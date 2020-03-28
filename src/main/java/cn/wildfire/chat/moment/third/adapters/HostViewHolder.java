@@ -8,7 +8,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+
 import cn.wildfire.chat.kit.GlideApp;
+import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfirechat.chat.R;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.model.Profile;
@@ -20,6 +25,9 @@ public class HostViewHolder extends RecyclerView.ViewHolder {
     private ImageView message_avatar;
     private TextView message_detail;
     private TextView hostid;
+    private RequestOptions requestOptions = new RequestOptions()
+            .placeholder(UIUtils.getRoundedDrawable(R.mipmap.default_header, 10))
+            .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(10)));
 
     public HostViewHolder(View itemView) {
         super(itemView);
@@ -38,7 +46,10 @@ public class HostViewHolder extends RecyclerView.ViewHolder {
     public void bind(Context context, UserInfo userInfo, Profile profile) {
         if (userInfo != null) {
             hostid.setText(userInfo.displayName);
-            GlideApp.with(context).load(userInfo.portrait).error(R.mipmap.default_header).into(friend_avatar);
+            GlideApp.with(context)
+                    .load(userInfo.portrait)
+                    .apply(requestOptions)
+                    .into(friend_avatar);
         }
         if (profile != null && !TextUtils.isEmpty(profile.backgroundUrl)) {
             GlideApp.with(context).load(profile.backgroundUrl).error(R.drawable.test_wallpic)
