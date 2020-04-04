@@ -29,6 +29,7 @@ import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnPraiseOrCommentClickListener;
 import cn.wildfire.chat.moment.third.others.FriendsCircleAdapterDivideLine;
 import cn.wildfire.chat.moment.third.utils.Utils;
+import cn.wildfire.chat.moment.third.widgets.CommentOrPraisePopupWindow;
 import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
 import cn.wildfirechat.chat.R;
 import cn.wildfirechat.model.UserInfo;
@@ -38,18 +39,20 @@ import cn.wildfirechat.moment.model.Feed;
 import cn.wildfirechat.remote.ChatManager;
 
 public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
-        OnPraiseOrCommentClickListener,
-        OnCommentItemClickListener,
-        OnCommentUserClickListener,
-        OnFeedUserClickListener,
-        OnCommentItemLongClickListener,
-        OnFeedItemLongClickListener {
+    OnPraiseOrCommentClickListener,
+    OnCommentItemClickListener,
+    OnCommentUserClickListener,
+    OnFeedUserClickListener,
+    OnCommentItemLongClickListener,
+    OnFeedItemLongClickListener {
 
     protected FriendCircleAdapter mFriendCircleAdapter;
     protected RecyclerView recyclerView;
     protected LinearLayoutManager layoutManager;
 
     protected CommentFragment commentFragment;
+
+    private CommentOrPraisePopupWindow mCommentOrPraisePopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         mFriendCircleAdapter.setOnFeedItemLongClickListener(this);
         mFriendCircleAdapter.setOnCommentUserClickListener(this);
         mFriendCircleAdapter.setOnFeedUserClickListener(this);
+        mFriendCircleAdapter.setOnPraiseOrCommentClickListener(this::toggleCommentOrPraisePopupWindow);
         recyclerView.setAdapter(mFriendCircleAdapter);
 
         initTitleBar();
@@ -306,9 +310,9 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         bundle.putLong("commentId", commentId);
         commentFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().
-                replace(R.id.commentLayoutContainer, commentFragment, "comment")
-                .show(commentFragment)
-                .commit();
+            replace(R.id.commentLayoutContainer, commentFragment, "comment")
+            .show(commentFragment)
+            .commit();
     }
 
     private void hideCommentFragment() {
@@ -398,13 +402,13 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         int defaultCustomKeyboardSize = getResources().getDimensionPixelSize(R.dimen.default_custom_keyboard_size);
         int minCustomKeyboardSize = getResources().getDimensionPixelSize(R.dimen.min_custom_keyboard_size);
         int keyboardHeight = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("keyboard_height_portrait", defaultCustomKeyboardSize);
+            .getInt("keyboard_height_portrait", defaultCustomKeyboardSize);
         return Math.max(keyboardHeight, minCustomKeyboardSize);
     }
 
     private int getCommentPanelTop() {
         int commentPanelTop = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("commentPanelTop", 0);
+            .getInt("commentPanelTop", 0);
         if (commentPanelTop > 0) {
             return commentPanelTop;
         }
@@ -469,4 +473,30 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         onCommentUserClick(userId);
     }
 
+    public void toggleCommentOrPraisePopupWindow(View anchorView, FriendCircleBean friendCircleBean, int position) {
+        if (mCommentOrPraisePopupWindow == null) {
+            List<PraiseBean> praiseBeans = friendCircleBean.getPraiseBeans();
+            boolean like = false;
+            if (praiseBeans != null) {
+                for (PraiseBean praiseBean : praiseBeans) {
+                    if (praiseBean.getPraiseUserId().equals(ChatManager.Instance().getUserId())) {
+                        like = true;
+                        break;
+                    }
+                }
+            }
+            mCommentOrPraisePopupWindow = new CommentOrPraisePopupWindow(this);
+        }
+        mCommentOrPraisePopupWindow
+            .setOnPraiseOrCommentClickListener(this)
+            .setCurrentPosition(position);
+        if (mCommentOrPraisePopupWindow.isShowing()) {
+            mCommentOrPraisePopupWindow.dismiss();
+        } else {
+            hideCommentFragment();
+            mCommentOrPraisePopupWindow.showPopupWindow(anchorView);
+        }
+    }
+
 }
+

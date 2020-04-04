@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray10"
+        android:background="#F8F8F8"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -17,21 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:focusable="true"
             android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingTop="5dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="5dp">
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp">
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"
-                android:background="@color/white"
                 android:gravity="center">
 
                 <EditText
@@ -39,13 +35,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:background="@null"
-                    android:drawableBottom="@drawable/selector_edit_focus"
-                    android:hint="评论"
-                    android:maxLines="4"
-                    android:minHeight="30dp"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
+                    android:background="@drawable/shape_session_text_input"
+                    android:maxLines="5"
+                    android:minHeight="44dp"
+                    android:paddingLeft="5dp"
                     android:textSize="16sp"
                     android:visibility="visible" />
 
@@ -53,27 +46,29 @@
 
             <ImageView
                 android:id="@+id/emotionImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:padding="6dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="bottom"
+                android:layout_margin="5dp"
+                android:scaleType="centerInside"
                 android:src="@mipmap/ic_cheat_emo" />
 
             <Button
                 android:id="@+id/sendButton"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_width="45dp"
+                android:layout_width="50dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="6dp"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="2.5dp"
                 android:background="@drawable/shape_session_btn_send"
                 android:enabled="false"
+                android:gravity="center"
                 android:text="@string/send"
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 android:visibility="visible" />
         </LinearLayout>
-
-        <View style="@style/Line" />
 
         <cn.wildfire.chat.kit.widget.KeyboardHeightFrameLayout
             android:id="@+id/emotionContainerFrameLayout"

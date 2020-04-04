@@ -76,7 +76,7 @@ public class TitleBarAlphaChangeHelper {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     totalScrollY += dy;
-                    Log.d(TAG, "RecyclerView: " + dy);
+                    Log.d(TAG, "RecyclerViewxxxxxxxxxxxxxxx: " + dy);
                     TitleBarAlphaChangeHelper.this.onScrolled(totalScrollY, dy > 0 ? -1 : 1);
                 }
             });
@@ -103,7 +103,7 @@ public class TitleBarAlphaChangeHelper {
             int effectRange = (int) (scrolledAlphaCriticalOffset2 + statusBarHeight * alphaEffectRangePlusRatio);
             //到达临界值
             if (scrollY >= scrolledAlphaCriticalOffset) {
-                if (scrollY - scrolledAlphaCriticalOffset > effectRange) return;
+//                if (scrollY - scrolledAlphaCriticalOffset > effectRange) return;
                 int offsetY;
                 //到达状态栏的临界值
                 if (scrollY >= scrolledAlphaCriticalOffset2) {

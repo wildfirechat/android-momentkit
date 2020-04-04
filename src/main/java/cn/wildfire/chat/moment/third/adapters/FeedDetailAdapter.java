@@ -24,7 +24,7 @@ import cn.wildfire.chat.moment.third.interfaces.OnCommentItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
-import cn.wildfire.chat.moment.third.interfaces.OnPraiseOrCommentClickListener;
+import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.CommentOrPraisePopupWindow;
 import cn.wildfirechat.chat.R;
@@ -49,7 +49,7 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private CommentOrPraisePopupWindow mCommentOrPraisePopupWindow;
 
-    private OnPraiseOrCommentClickListener mOnPraiseOrCommentClickListener;
+    private OnTogglePraiseOrCommentPopupWindowListener onTogglePraiseOrCommentPopupWindowListener;
     private OnCommentItemClickListener onCommentItemClickListener;
     private OnCommentItemLongClickListener onCommentItemLongClickListener;
     private OnFeedItemLongClickListener onFeedItemLongClickListener;
@@ -72,9 +72,6 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRequestOptions = new RequestOptions().centerCrop();
         this.mDrawableTransitionOptions = DrawableTransitionOptions.withCrossFade();
-        if (context instanceof OnPraiseOrCommentClickListener) {
-            this.mOnPraiseOrCommentClickListener = (OnPraiseOrCommentClickListener) context;
-        }
     }
 
     public void setOnCommentItemClickListener(OnCommentItemClickListener onCommentItemClickListener) {
@@ -176,7 +173,7 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof BaseFriendCircleViewHolder) {
             // header
             position--;
-            ((BaseFriendCircleViewHolder) holder).makeUserBaseData((BaseFriendCircleViewHolder) holder, mContext, friendCircleBean, position, onlyUpdatePraiseOrComment, onlyUpdatePraiseOrComment, onFeedItemLongClickListener, onFeedUserClickListener, onCommentUserClickListener, mOnPraiseOrCommentClickListener);
+            ((BaseFriendCircleViewHolder) holder).makeUserBaseData((BaseFriendCircleViewHolder) holder, mContext, friendCircleBean, position, onlyUpdatePraiseOrComment, onlyUpdatePraiseOrComment, onFeedItemLongClickListener, onFeedUserClickListener, onCommentUserClickListener, onTogglePraiseOrCommentPopupWindowListener);
             if (holder instanceof OnlyWordViewHolder) {
                 OnlyWordViewHolder onlyWordViewHolder = (OnlyWordViewHolder) holder;
             } else if (holder instanceof WordAndUrlViewHolder) {
@@ -185,9 +182,9 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else if (holder instanceof WordAndImagesViewHolder) {
                 WordAndImagesViewHolder wordAndImagesViewHolder = (WordAndImagesViewHolder) holder;
                 wordAndImagesViewHolder.nineGridView.setOnImageClickListener((position1, view) ->
-                        MMPreviewActivity.startActivity(mContext, friendCircleBean.getMediaEntries(), position1));
+                    MMPreviewActivity.startActivity(mContext, friendCircleBean.getMediaEntries(), position1));
                 wordAndImagesViewHolder.nineGridView.setAdapter(new NineImageAdapter(mContext, mRequestOptions,
-                        mDrawableTransitionOptions, friendCircleBean.getMediaEntries()));
+                    mDrawableTransitionOptions, friendCircleBean.getMediaEntries()));
             }
         }
     }

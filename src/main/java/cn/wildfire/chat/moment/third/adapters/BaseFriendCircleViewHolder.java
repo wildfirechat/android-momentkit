@@ -1,6 +1,5 @@
 package cn.wildfire.chat.moment.third.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,23 +14,18 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.util.List;
-
 import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
 import cn.wildfire.chat.moment.third.beans.OtherInfoBean;
-import cn.wildfire.chat.moment.third.beans.PraiseBean;
 import cn.wildfire.chat.moment.third.beans.UserBean;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
-import cn.wildfire.chat.moment.third.interfaces.OnPraiseOrCommentClickListener;
+import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
 import cn.wildfire.chat.moment.third.span.TextMovementMethod;
 import cn.wildfire.chat.moment.third.utils.SpanUtils;
-import cn.wildfire.chat.moment.third.widgets.CommentOrPraisePopupWindow;
 import cn.wildfire.chat.moment.third.widgets.VerticalCommentWidget;
 import cn.wildfirechat.chat.R;
-import cn.wildfirechat.remote.ChatManager;
 
 class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
 
@@ -50,9 +44,8 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
     public LinearLayout layoutPraiseAndComment;
 
     private Context mContext;
-    private CommentOrPraisePopupWindow mCommentOrPraisePopupWindow;
     private RequestOptions mRequestOptions = new RequestOptions()
-            .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(10)));
+        .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(10)));
 
     public BaseFriendCircleViewHolder(View itemView) {
         super(itemView);
@@ -81,7 +74,7 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
                                  OnFeedItemLongClickListener onFeedItemLongClickListener,
                                  OnFeedUserClickListener onFeedUserClickListener,
                                  OnCommentUserClickListener onCommentUserClickListener,
-                                 OnPraiseOrCommentClickListener onPraiseOrCommentClickListener) {
+                                 OnTogglePraiseOrCommentPopupWindowListener onTogglePraiseOrCommentPopupWindowListener) {
         this.mContext = context;
         if (!onlyPraise && !onlyComment) {
             holder.txtContent.setText(friendCircleBean.getContentSpan());
@@ -107,8 +100,8 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
                 Glide.with(mContext).load(userBean.getUserAvatarUrl())
-                        .apply(mRequestOptions)
-                        .into(holder.imgAvatar);
+                    .apply(mRequestOptions)
+                    .into(holder.imgAvatar);
             }
 
             OtherInfoBean otherInfoBean = friendCircleBean.getOtherInfoBean();
@@ -120,28 +113,8 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
             holder.txtLocation.setOnClickListener(v -> Toast.makeText(mContext, "You Click Location", Toast.LENGTH_SHORT).show());
 
             holder.imgPraiseOrComment.setOnClickListener(v -> {
-                if (mContext instanceof Activity) {
-                    if (mCommentOrPraisePopupWindow == null) {
-                        List<PraiseBean> praiseBeans = friendCircleBean.getPraiseBeans();
-                        boolean like = false;
-                        if (praiseBeans != null) {
-                            for (PraiseBean praiseBean : praiseBeans) {
-                                if (praiseBean.getPraiseUserId().equals(ChatManager.Instance().getUserId())) {
-                                    like = true;
-                                    break;
-                                }
-                            }
-                        }
-                        mCommentOrPraisePopupWindow = new CommentOrPraisePopupWindow(mContext);
-                    }
-                    mCommentOrPraisePopupWindow
-                            .setOnPraiseOrCommentClickListener(onPraiseOrCommentClickListener)
-                            .setCurrentPosition(position);
-                    if (mCommentOrPraisePopupWindow.isShowing()) {
-                        mCommentOrPraisePopupWindow.dismiss();
-                    } else {
-                        mCommentOrPraisePopupWindow.showPopupWindow(v);
-                    }
+                if (onTogglePraiseOrCommentPopupWindowListener != null) {
+                    onTogglePraiseOrCommentPopupWindowListener.togglePraiseOrCommentPopupWindow(holder.imgPraiseOrComment, friendCircleBean, position);
                 }
             });
         }

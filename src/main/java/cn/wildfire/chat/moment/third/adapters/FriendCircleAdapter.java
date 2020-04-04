@@ -1,6 +1,5 @@
 package cn.wildfire.chat.moment.third.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -25,22 +23,16 @@ import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.moment.third.Constants;
 import cn.wildfire.chat.moment.third.beans.CommentBean;
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
-import cn.wildfire.chat.moment.third.beans.OtherInfoBean;
-import cn.wildfire.chat.moment.third.beans.PraiseBean;
-import cn.wildfire.chat.moment.third.beans.UserBean;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
-import cn.wildfire.chat.moment.third.interfaces.OnPraiseOrCommentClickListener;
-import cn.wildfire.chat.moment.third.utils.SpanUtils;
+import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
 import cn.wildfire.chat.moment.third.utils.Utils;
-import cn.wildfire.chat.moment.third.widgets.CommentOrPraisePopupWindow;
 import cn.wildfirechat.chat.R;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.model.Profile;
-import cn.wildfirechat.remote.ChatManager;
 
 /**
  * @author KCrason
@@ -61,9 +53,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private DrawableTransitionOptions mDrawableTransitionOptions;
 
-    private CommentOrPraisePopupWindow mCommentOrPraisePopupWindow;
-
-    private OnPraiseOrCommentClickListener mOnPraiseOrCommentClickListener;
+    private OnTogglePraiseOrCommentPopupWindowListener onTogglePraiseOrCommentPopupWindowListener;
     private OnCommentItemClickListener onCommentItemClickListener;
     private OnCommentItemLongClickListener onCommentItemLongClickListener;
     private OnFeedItemLongClickListener onFeedItemLongClickListener;
@@ -92,12 +82,9 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRequestOptions = new RequestOptions().centerCrop();
         this.mAvatarRequestOptions = new RequestOptions()
-                .placeholder(UIUtils.getRoundedDrawable(R.mipmap.default_header, 13))
-                .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(13)));
+            .placeholder(UIUtils.getRoundedDrawable(R.mipmap.default_header, 13))
+            .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(13)));
         this.mDrawableTransitionOptions = DrawableTransitionOptions.withCrossFade();
-        if (context instanceof OnPraiseOrCommentClickListener) {
-            this.mOnPraiseOrCommentClickListener = (OnPraiseOrCommentClickListener) context;
-        }
     }
 
     public void setHeaderViewHolder(HostViewHolder headerViewHolder) {
@@ -122,6 +109,10 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setOnFeedUserClickListener(OnFeedUserClickListener onFeedUserClickListener) {
         this.onFeedUserClickListener = onFeedUserClickListener;
+    }
+
+    public void setOnPraiseOrCommentClickListener(OnTogglePraiseOrCommentPopupWindowListener onTogglePraiseOrCommentPopupWindowListener) {
+        this.onTogglePraiseOrCommentPopupWindowListener = onTogglePraiseOrCommentPopupWindowListener;
     }
 
     public void setFriendCircleBeans(List<FriendCircleBean> friendCircleBeans) {
@@ -288,7 +279,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             position -= headerCount();
             if (mFriendCircleBeans != null && position < mFriendCircleBeans.size()) {
                 FriendCircleBean friendCircleBean = mFriendCircleBeans.get(position);
-                makeUserBaseData((BaseFriendCircleViewHolder) holder, friendCircleBean, position, onlyUpdatePraiseOrComment, onlyUpdatePraiseOrComment);
+                ((BaseFriendCircleViewHolder) holder).makeUserBaseData((BaseFriendCircleViewHolder) holder, mContext, friendCircleBean, position, onlyUpdatePraiseOrComment, onlyUpdatePraiseOrComment, onFeedItemLongClickListener, onFeedUserClickListener, onCommentUserClickListener, onTogglePraiseOrCommentPopupWindowListener);
                 if (holder instanceof OnlyWordViewHolder) {
                     OnlyWordViewHolder onlyWordViewHolder = (OnlyWordViewHolder) holder;
                 } else if (holder instanceof WordAndUrlViewHolder) {
@@ -297,134 +288,14 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 } else if (holder instanceof WordAndImagesViewHolder) {
                     WordAndImagesViewHolder wordAndImagesViewHolder = (WordAndImagesViewHolder) holder;
                     wordAndImagesViewHolder.nineGridView.setOnImageClickListener((position1, view) ->
-                            MMPreviewActivity.startActivity(mContext, friendCircleBean.getMediaEntries(), position1));
+                        MMPreviewActivity.startActivity(mContext, friendCircleBean.getMediaEntries(), position1));
                     wordAndImagesViewHolder.nineGridView.setAdapter(new NineImageAdapter(mContext, mRequestOptions,
-                            mDrawableTransitionOptions, friendCircleBean.getMediaEntries()));
+                        mDrawableTransitionOptions, friendCircleBean.getMediaEntries()));
                 }
             }
         } else if (holder instanceof HostViewHolder) {
             // header
             ((HostViewHolder) holder).bind(mContext, userInfo, profile);
-        }
-    }
-
-    private void makeUserBaseData(BaseFriendCircleViewHolder holder, FriendCircleBean friendCircleBean, int position, boolean onlyPraise, boolean onlyComment) {
-        if (!onlyPraise && !onlyComment) {
-            holder.txtContent.setText(friendCircleBean.getContentSpan());
-            setContentShowState(holder, friendCircleBean);
-            holder.txtContent.setOnLongClickListener(v -> {
-                if (onFeedItemLongClickListener != null) {
-                    onFeedItemLongClickListener.onFeedItemLongClick(v, position);
-                }
-                return true;
-            });
-
-            UserBean userBean = friendCircleBean.getUserBean();
-            if (userBean != null) {
-                holder.txtUserName.setText(userBean.getUserName());
-                holder.txtUserName.setOnClickListener(v -> {
-                    if (onFeedUserClickListener != null) {
-                        onFeedUserClickListener.onFeedUserClick(userBean.getUserId());
-                    }
-                });
-                holder.imgAvatar.setOnClickListener(v -> {
-                    if (onFeedUserClickListener != null) {
-                        onFeedUserClickListener.onFeedUserClick(userBean.getUserId());
-                    }
-                });
-                Glide.with(mContext).load(userBean.getUserAvatarUrl())
-                        .apply(mAvatarRequestOptions.override(mAvatarSize, mAvatarSize))
-                        .transition(mDrawableTransitionOptions)
-                        .into(holder.imgAvatar);
-            }
-
-            OtherInfoBean otherInfoBean = friendCircleBean.getOtherInfoBean();
-
-            if (otherInfoBean != null) {
-                holder.txtSource.setText(otherInfoBean.getSource());
-                holder.txtPublishTime.setText(otherInfoBean.getTime());
-            }
-            holder.txtLocation.setOnClickListener(v -> Toast.makeText(mContext, "You Click Location", Toast.LENGTH_SHORT).show());
-
-            holder.imgPraiseOrComment.setOnClickListener(v -> {
-                if (mContext instanceof Activity) {
-                    if (mCommentOrPraisePopupWindow == null) {
-                        mCommentOrPraisePopupWindow = new CommentOrPraisePopupWindow(mContext);
-                    }
-                    List<PraiseBean> praiseBeans = friendCircleBean.getPraiseBeans();
-                    boolean like = false;
-                    if (praiseBeans != null) {
-                        for (PraiseBean praiseBean : praiseBeans) {
-                            if (praiseBean.getPraiseUserId().equals(ChatManager.Instance().getUserId())) {
-                                like = true;
-                                break;
-                            }
-                        }
-                    }
-                    mCommentOrPraisePopupWindow
-                            .setOnPraiseOrCommentClickListener(mOnPraiseOrCommentClickListener)
-                            .setCurrentPosition(position);
-                    mCommentOrPraisePopupWindow.setLiked(like);
-                    if (mCommentOrPraisePopupWindow.isShowing()) {
-                        mCommentOrPraisePopupWindow.dismiss();
-                    } else {
-                        mCommentOrPraisePopupWindow.showPopupWindow(v);
-                    }
-                }
-            });
-        }
-
-        if (friendCircleBean.isShowPraise() || friendCircleBean.isShowComment()) {
-            holder.layoutPraiseAndComment.setVisibility(View.VISIBLE);
-            if (friendCircleBean.isShowComment() && friendCircleBean.isShowPraise()) {
-                holder.viewLine.setVisibility(View.VISIBLE);
-            } else {
-                holder.viewLine.setVisibility(View.GONE);
-            }
-            if (friendCircleBean.isShowPraise()) {
-                friendCircleBean.setPraiseSpan(SpanUtils.makePraiseSpan(mContext, friendCircleBean.getPraiseBeans(), onCommentUserClickListener));
-                holder.txtPraiseContent.setVisibility(View.VISIBLE);
-                holder.txtPraiseContent.setText(friendCircleBean.getPraiseSpan());
-            } else {
-                holder.txtPraiseContent.setVisibility(View.GONE);
-            }
-            if (friendCircleBean.isShowComment()) {
-                holder.verticalCommentWidget.setVisibility(View.VISIBLE);
-                holder.verticalCommentWidget.addComments(position, friendCircleBean.getCommentBeans(), false);
-            } else {
-                holder.verticalCommentWidget.setVisibility(View.GONE);
-            }
-        } else {
-            holder.layoutPraiseAndComment.setVisibility(View.GONE);
-        }
-
-    }
-
-    private void setContentShowState(BaseFriendCircleViewHolder holder, FriendCircleBean friendCircleBean) {
-        if (friendCircleBean.isShowCheckAll()) {
-            holder.txtState.setVisibility(View.VISIBLE);
-            setTextState(holder, friendCircleBean.isExpanded());
-            holder.txtState.setOnClickListener(v -> {
-                if (friendCircleBean.isExpanded()) {
-                    friendCircleBean.setExpanded(false);
-                } else {
-                    friendCircleBean.setExpanded(true);
-                }
-                setTextState(holder, friendCircleBean.isExpanded());
-            });
-        } else {
-            holder.txtState.setVisibility(View.GONE);
-            holder.txtContent.setMaxLines(Integer.MAX_VALUE);
-        }
-    }
-
-    private void setTextState(BaseFriendCircleViewHolder holder, boolean isExpand) {
-        if (isExpand) {
-            holder.txtContent.setMaxLines(Integer.MAX_VALUE);
-            holder.txtState.setText("收起");
-        } else {
-            holder.txtContent.setMaxLines(4);
-            holder.txtState.setText("全文");
         }
     }
 
