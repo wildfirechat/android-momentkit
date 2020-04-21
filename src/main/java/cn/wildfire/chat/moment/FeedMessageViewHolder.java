@@ -80,7 +80,7 @@ public class FeedMessageViewHolder extends RecyclerView.ViewHolder {
         userId = userInfo.uid;
 
         nameTextViw.setText(userInfo.displayName);
-        GlideApp.with(itemView).load(userInfo.portrait).placeholder(R.mipmap.default_header).into(portraitImageView);
+        GlideApp.with(itemView).load(userInfo.portrait).placeholder(R.mipmap.avatar_def).into(portraitImageView);
         timeTextView.setText(TimeUtils.getMsgFormatTime(message.serverTime));
     }
 

@@ -26,7 +26,7 @@ public class HostViewHolder extends RecyclerView.ViewHolder {
     private TextView message_detail;
     private TextView hostid;
     private RequestOptions requestOptions = new RequestOptions()
-            .placeholder(UIUtils.getRoundedDrawable(R.mipmap.default_header, 10))
+            .placeholder(UIUtils.getRoundedDrawable(R.mipmap.avatar_def, 10))
             .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(10)));
 
     public HostViewHolder(View itemView) {
@@ -52,7 +52,7 @@ public class HostViewHolder extends RecyclerView.ViewHolder {
                     .into(friend_avatar);
         }
         if (profile != null && !TextUtils.isEmpty(profile.backgroundUrl)) {
-            GlideApp.with(context).load(profile.backgroundUrl).error(R.drawable.test_wallpic)
+            GlideApp.with(context).load(profile.backgroundUrl).placeholder(R.drawable.test_wallpic)
                     .into(friend_wall_pic);
         }
     }

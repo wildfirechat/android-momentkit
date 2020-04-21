@@ -82,7 +82,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRequestOptions = new RequestOptions().centerCrop();
         this.mAvatarRequestOptions = new RequestOptions()
-            .placeholder(UIUtils.getRoundedDrawable(R.mipmap.default_header, 13))
+            .placeholder(UIUtils.getRoundedDrawable(R.mipmap.avatar_def, 13))
             .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(13)));
         this.mDrawableTransitionOptions = DrawableTransitionOptions.withCrossFade();
     }

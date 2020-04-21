@@ -417,7 +417,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         int height = outMetrics.heightPixels;
-        return height - (getKeyboardPortraitHeight() + Utils.dp2px(50));
+        return height - (getKeyboardPortraitHeight() + Utils.dp2px(40));
     }
 
     protected void deleteFeed(int feedPosition) {

@@ -84,12 +84,12 @@ public class FriendCircleBean {
                         commentBean.setParentUserId(comment.replyTo);
                         commentBean.setParentUserName(ChatManager.Instance().getUserDisplayName(comment.replyTo));
                     }
-                    commentBean.setId(comment.commentUid);
+                    commentBean.setId(comment.commentId);
                     commentBean.setCommentContent(comment.text);
                     commentBeans.add(commentBean);
                 } else {
                     PraiseBean praiseBean = new PraiseBean();
-                    praiseBean.setId(comment.commentUid);
+                    praiseBean.setId(comment.commentId);
                     praiseBean.setPraiseUserId(comment.sender);
                     praiseBean.setPraiseUserName(ChatManager.Instance().getUserDisplayName(comment.sender));
                     praiseBeans.add(praiseBean);

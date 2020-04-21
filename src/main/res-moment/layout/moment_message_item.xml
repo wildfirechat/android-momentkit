@@ -10,7 +10,7 @@
         android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:src="@mipmap/default_header" />
+        android:src="@mipmap/avatar_def" />
 
     <LinearLayout
         android:id="@+id/contentLinearLayout"
