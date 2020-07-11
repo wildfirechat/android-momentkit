@@ -9,7 +9,10 @@
 
 2. 将本仓库下载到和```android-chat```的同级目录，并确保本仓库下载之后的目录名字是```android-momentkit```
 
-3. ```android-chat```中新建```aar module```，将```moment client aar```引入。
+3. ```android-chat```项目中新建```aar module```，将```moment client aar```引入，具体如下：
+   1. Android Studio -> File -> New -> New Module -> Import .JAR/.AAR Package 
+   2. Import Module From Library 界面 File name：选择步骤1中购买的aar文件；Subproject name 填写```momentclient```
+   3. Finish，完成之后，```android-chat```项目根目录下的```settting.gradle```会新增一行```include ':momentclient'```，并且```android-chat```项目根目录下会新增一个```momentclient```目录。
 
 4. 修改```android-chat/chat/build.gradle```，将以下部分取消注释：
 
@@ -17,7 +20,7 @@
       //            java.srcDirs += ['../../android-momentkit/src/main/java']
       //            res.srcDirs += ['../../android-momentkit/src/main/res-moment']
       
-      //    implementation project(':momentclient') //和步骤3相关
+      //    implementation project(':momentclient') //和步骤3中填写的Subproject name一致
       //    api 'me.everything:overscroll-decor-android:1.0.4'
       ```
 
