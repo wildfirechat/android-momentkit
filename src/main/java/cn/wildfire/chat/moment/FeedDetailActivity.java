@@ -8,7 +8,7 @@ import java.util.Collections;
 
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
 import cn.wildfire.chat.moment.third.widgets.TitleBar;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.moment.MomentClient;
 import cn.wildfirechat.moment.model.Feed;
 

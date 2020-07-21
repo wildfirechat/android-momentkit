@@ -10,7 +10,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 
 /**

@@ -16,7 +16,7 @@ import cn.wildfire.chat.moment.third.beans.PraiseBean;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
 import cn.wildfire.chat.moment.third.span.CommentUserSpan;
 import cn.wildfire.chat.moment.third.span.VerticalImageSpan;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 /**
  * @author KCrason

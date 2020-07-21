@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import cn.wildfire.chat.kit.widget.InputAwareLayout;
 import cn.wildfire.chat.kit.widget.KeyboardAwareLinearLayout;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 public class CommentFragment extends Fragment implements KeyboardAwareLinearLayout.OnKeyboardHiddenListener,
         KeyboardAwareLinearLayout.OnKeyboardShownListener {

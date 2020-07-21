@@ -6,7 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 public class VisibleScopeViewHolder extends RecyclerView.ViewHolder {
     public TextView visibleScopeTextView;

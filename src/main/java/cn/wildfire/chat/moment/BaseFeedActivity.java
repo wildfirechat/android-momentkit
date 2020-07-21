@@ -31,7 +31,7 @@ import cn.wildfire.chat.moment.third.others.FriendsCircleAdapterDivideLine;
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.CommentOrPraisePopupWindow;
 import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.FeedCommentType;
 import cn.wildfirechat.moment.MomentClient;
@@ -220,12 +220,8 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
             PopupMenu popup = new PopupMenu(this, commentItemView);
             popup.getMenuInflater().inflate(R.menu.comment_item_delete_popup_menu, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.delete:
-                        deleteComment(feedPosition, commentPosition);
-                        break;
-                    default:
-                        break;
+                if (item.getItemId() == R.id.delete) {
+                    deleteComment(feedPosition, commentPosition);
                 }
 
                 return true;
@@ -254,17 +250,12 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         PopupMenu popup = new PopupMenu(this, commentItemView);
         popup.getMenuInflater().inflate(menuId, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.copy:
-                    Toast.makeText(this, "copy", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.collection:
-                    break;
-                case R.id.delete:
-                    deleteComment(feedPosition, commentPosition);
-                    break;
-                default:
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.copy) {
+                Toast.makeText(this, "copy", Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.collection) {
+            } else if (itemId == R.id.delete) {
+                deleteComment(feedPosition, commentPosition);
             }
             return true;
         });
@@ -283,17 +274,12 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         PopupMenu popup = new PopupMenu(this, feedItemView);
         popup.getMenuInflater().inflate(menuId, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.copy:
-                    Toast.makeText(this, "copy", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.collection:
-                    break;
-                case R.id.delete:
-                    deleteFeed(feedPosition);
-                    break;
-                default:
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.copy) {
+                Toast.makeText(this, "copy", Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.collection) {
+            } else if (itemId == R.id.delete) {
+                deleteFeed(feedPosition);
             }
             return true;
         });

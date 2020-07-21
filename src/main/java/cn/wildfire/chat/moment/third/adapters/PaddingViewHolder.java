@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 public class PaddingViewHolder extends RecyclerView.ViewHolder {
     private View paddingView;

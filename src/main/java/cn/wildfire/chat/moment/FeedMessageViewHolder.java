@@ -14,7 +14,7 @@ import cn.wildfire.chat.kit.GlideApp;
 import cn.wildfire.chat.kit.third.utils.TimeUtils;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.span.VerticalImageSpan;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.message.Message;
 import cn.wildfirechat.message.MessageContent;
 import cn.wildfirechat.model.UserInfo;

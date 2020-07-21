@@ -16,7 +16,7 @@ import java.util.List;
 
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.NineGridView;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 public class FeedMediaContentAdapter implements NineGridView.NineGridAdapter<String> {
 

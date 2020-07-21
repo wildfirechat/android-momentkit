@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.util.TypedValue;
 import android.view.View;
 
-import cn.wildfire.chat.app.MyApp;
+import cn.wildfire.chat.kit.WfcUIKit;
 
 /**
  * @author KCrason
@@ -15,15 +15,15 @@ import cn.wildfire.chat.app.MyApp;
 public class Utils {
 
     public static int dp2px(float dpValue) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, MyApp.getContext().getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, WfcUIKit.getWfcUIKit().getApplication().getResources().getDisplayMetrics());
     }
 
     public static int getScreenWidth() {
-        return MyApp.getContext().getResources().getDisplayMetrics().widthPixels;
+        return WfcUIKit.getWfcUIKit().getApplication().getResources().getDisplayMetrics().widthPixels;
     }
 
     public static int getScreenHeight() {
-        return MyApp.getContext().getResources().getDisplayMetrics().heightPixels;
+        return WfcUIKit.getWfcUIKit().getApplication().getResources().getDisplayMetrics().heightPixels;
     }
 
     public static int calcStatusBarHeight(Context context) {

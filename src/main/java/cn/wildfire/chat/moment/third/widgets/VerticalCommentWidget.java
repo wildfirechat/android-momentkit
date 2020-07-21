@@ -20,7 +20,7 @@ import cn.wildfire.chat.moment.third.interfaces.OnCommentItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
 import cn.wildfire.chat.moment.third.others.SimpleWeakObjectPool;
 import cn.wildfire.chat.moment.third.utils.Utils;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 /**
  * @author KCrason

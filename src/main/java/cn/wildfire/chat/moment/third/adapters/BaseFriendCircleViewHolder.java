@@ -25,7 +25,7 @@ import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWind
 import cn.wildfire.chat.moment.third.span.TextMovementMethod;
 import cn.wildfire.chat.moment.third.utils.SpanUtils;
 import cn.wildfire.chat.moment.third.widgets.VerticalCommentWidget;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
 

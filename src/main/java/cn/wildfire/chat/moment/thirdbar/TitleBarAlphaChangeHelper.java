@@ -9,7 +9,7 @@ import android.view.ViewTreeObserver;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 import cn.wildfire.chat.moment.third.widgets.TitleBar;
 

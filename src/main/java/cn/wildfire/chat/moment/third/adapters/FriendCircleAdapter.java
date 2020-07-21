@@ -30,7 +30,7 @@ import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
 import cn.wildfire.chat.moment.third.utils.Utils;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.model.Profile;
 
@@ -82,7 +82,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRequestOptions = new RequestOptions().centerCrop();
         this.mAvatarRequestOptions = new RequestOptions()
-            .placeholder(UIUtils.getRoundedDrawable(R.mipmap.avatar_def, 13))
+            .placeholder(R.mipmap.avatar_def)
             .transforms(new CenterCrop(), new RoundedCorners(UIUtils.dip2Px(13)));
         this.mDrawableTransitionOptions = DrawableTransitionOptions.withCrossFade();
     }

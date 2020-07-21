@@ -9,7 +9,7 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 /**
  * @author KCrason

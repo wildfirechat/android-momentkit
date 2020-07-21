@@ -27,7 +27,7 @@ import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.CommentOrPraisePopupWindow;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 /**
  * @author KCrason

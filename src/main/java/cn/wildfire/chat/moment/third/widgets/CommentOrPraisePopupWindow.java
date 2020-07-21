@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import cn.wildfire.chat.moment.third.interfaces.OnPraiseOrCommentClickListener;
 import cn.wildfire.chat.moment.third.utils.Utils;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 public class CommentOrPraisePopupWindow extends PopupWindow implements View.OnClickListener {
 
@@ -76,19 +76,15 @@ public class CommentOrPraisePopupWindow extends PopupWindow implements View.OnCl
     @Override
     public void onClick(View v) {
         dismiss();
-        switch (v.getId()) {
-            case R.id.layout_praise:
-                if (mOnPraiseOrCommentClickListener != null) {
-                    mOnPraiseOrCommentClickListener.onPraiseClick(mCurrentPosition);
-                }
-                break;
-            case R.id.layout_comment:
-                if (mOnPraiseOrCommentClickListener != null) {
-                    mOnPraiseOrCommentClickListener.onCommentClick(v, mCurrentPosition);
-                }
-                break;
-            default:
-                break;
+        int id = v.getId();
+        if (id == R.id.layout_praise) {
+            if (mOnPraiseOrCommentClickListener != null) {
+                mOnPraiseOrCommentClickListener.onPraiseClick(mCurrentPosition);
+            }
+        } else if (id == R.id.layout_comment) {
+            if (mOnPraiseOrCommentClickListener != null) {
+                mOnPraiseOrCommentClickListener.onCommentClick(v, mCurrentPosition);
+            }
         }
     }
 }

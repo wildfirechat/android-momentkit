@@ -30,22 +30,23 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cn.wildfire.chat.kit.widget.InputAwareLayout;
 import cn.wildfire.chat.kit.widget.KeyboardHeightFrameLayout;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
+import cn.wildfire.chat.kit.R2;
 
 public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedListener {
 
-    @BindView(R.id.editText)
+    @BindView(R2.id.editText)
     EditText editText;
-    @BindView(R.id.emotionImageView)
+    @BindView(R2.id.emotionImageView)
     ImageView emotionImageView;
-    @BindView(R.id.sendButton)
+    @BindView(R2.id.sendButton)
     Button sendButton;
 
-    @BindView(R.id.emotionContainerFrameLayout)
+    @BindView(R2.id.emotionContainerFrameLayout)
     KeyboardHeightFrameLayout emotionContainerFrameLayout;
-    @BindView(R.id.emotionLayout)
+    @BindView(R2.id.emotionLayout)
     EmotionLayout emotionLayout;
-    @BindView(R.id.inputContainerLinearLayout)
+    @BindView(R2.id.inputContainerLinearLayout)
     LinearLayout inputContainerLinearLayout;
 
     private InputAwareLayout rootLinearLayout;
@@ -101,7 +102,7 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
         emotionLayout.setEmotionSelectedListener(this);
     }
 
-    @OnClick(R.id.emotionImageView)
+    @OnClick(R2.id.emotionImageView)
     void onEmotionImageViewClick() {
         if (rootLinearLayout.getCurrentInput() == emotionContainerFrameLayout) {
             rootLinearLayout.showSoftkey(editText);
@@ -112,12 +113,12 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
         }
     }
 
-    @OnTextChanged(value = R.id.editText, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    @OnTextChanged(value = R2.id.editText, callback = OnTextChanged.Callback.TEXT_CHANGED)
     void onInputTextChanged(CharSequence s, int start, int before, int count) {
         // do nothing
     }
 
-    @OnTextChanged(value = R.id.editText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    @OnTextChanged(value = R2.id.editText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterInputTextChanged(Editable editable) {
         if (editText.getText().toString().trim().length() > 0) {
             sendButton.setEnabled(true);
@@ -126,7 +127,7 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
         }
     }
 
-    @OnClick(R.id.sendButton)
+    @OnClick(R2.id.sendButton)
     void sendMessage() {
         commentEmojiCount = 0;
         Editable content = editText.getText();

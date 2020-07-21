@@ -16,7 +16,7 @@ import cn.wildfire.chat.kit.GlideApp;
 import cn.wildfire.chat.kit.mm.MediaEntry;
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.NineGridView;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 /**
  * @author KCrason

@@ -20,7 +20,7 @@ import androidx.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 import static cn.wildfire.chat.moment.third.widgets.TitleBar.TitleBarMode.MODE_BOTH;
 import static cn.wildfire.chat.moment.third.widgets.TitleBar.TitleBarMode.MODE_LEFT;

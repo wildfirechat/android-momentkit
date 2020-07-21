@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.wildfire.chat.moment.third.widgets.TitleBar;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 /**
  * Created by 大灯泡 on 2017/3/22.

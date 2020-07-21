@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import cn.wildfire.chat.moment.thirdbar.StatusBarHelper;
 import cn.wildfire.chat.moment.thirdbar.StatusBarViewPlaceHolder;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 
 /**
  * Created by 大灯泡 on 2017/3/22.

@@ -10,7 +10,7 @@ import java.util.List;
 
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
-import cn.wildfirechat.chat.R;
+import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.message.Message;
 import cn.wildfirechat.moment.MomentClient;
 import cn.wildfirechat.remote.ChatManager;
