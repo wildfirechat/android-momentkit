@@ -14,7 +14,7 @@
    2. Import Module From Library 界面 File name：选择步骤1中购买的aar文件；Subproject name 填写```momentclient```
    3. Finish，完成之后，```android-chat```项目根目录下的```settting.gradle```会新增一行```include ':momentclient'```，并且```android-chat```项目根目录下会新增一个```momentclient```目录。
 
-4. 修改```android-chat/chat/build.gradle```，将以下部分取消注释：
+4. 修改```android-chat/uikit/build.gradle```，将以下部分取消注释：
 
       ```
       //            java.srcDirs += ['../../android-momentkit/src/main/java']
@@ -24,7 +24,7 @@
       //    api 'me.everything:overscroll-decor-android:1.0.4'
       ```
 
-5. 修改```chat/src/main/AndroidManifest.xml```，将以下取消注释：
+5. 修改```uikit/src/main/AndroidManifest.xml```，将以下取消注释：
 
       ```
       <!--        <activity android:name="cn.wildfire.chat.moment.PublishFeedActivity" />-->
