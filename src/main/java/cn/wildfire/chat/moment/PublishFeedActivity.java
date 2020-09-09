@@ -30,12 +30,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.wildfire.chat.kit.Config;
+import cn.wildfire.chat.kit.R;
+import cn.wildfire.chat.kit.R2;
 import cn.wildfire.chat.kit.contact.pick.PickContactActivity;
 import cn.wildfire.chat.kit.widget.OptionItemView;
 import cn.wildfire.chat.moment.third.widgets.NineGridView;
 import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
-import cn.wildfire.chat.kit.R;
-import cn.wildfire.chat.kit.R2;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.FeedContentType;
 import cn.wildfirechat.moment.MomentClient;
@@ -235,11 +235,16 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
 
     // TODO 是否发送原图
     private void publishFeed() {
+
+        if (TextUtils.isEmpty(editText.getText().toString()) && (nineGridAdapter == null || (videoPath == null && nineGridAdapter.getImageUrls().isEmpty()))) {
+            Toast.makeText(this, "请输入想发表的内容~", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Feed feed = new Feed();
         MaterialDialog dialog = new MaterialDialog.Builder(this)
-                .progress(true, 100)
-                .cancelable(false)
-                .build();
+            .progress(true, 100)
+            .cancelable(false)
+            .build();
         dialog.show();
         ChatManager.Instance().getWorkHandler().post(() -> {
             List<FeedEntry> feedEntries = new ArrayList<>();
