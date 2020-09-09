@@ -243,9 +243,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
 
     @Override
     public void onFeedItemLongClick(View feedItemView, int feedPosition) {
-//        FeedDetailActivity.feed = mFriendCircleAdapter.getmFriendCircleBeans().get(feedPosition);
-//        Intent intent = new Intent(this, FeedDetailActivity.class);
-//        startActivity(intent);
+        super.onFeedItemLongClick(feedItemView, feedPosition);
     }
 
     protected void loadFeeds() {
