@@ -7,7 +7,7 @@
 
 1. 联系官方，购买```moment client aar```相关授权。
 
-2. 将本仓库下载到和```android-chat```的同级目录，并确保本仓库下载之后的目录名字是```android-momentkit```
+2. 将***本仓库***下载到和```android-chat```的同级目录，并确保***本仓库***下载之后的目录名字是```android-momentkit```
 
 3. ```android-chat```项目中新建```aar module```，将```moment client aar```引入，具体如下：
    1. Android Studio -> File -> New -> New Module -> Import .JAR/.AAR Package 
