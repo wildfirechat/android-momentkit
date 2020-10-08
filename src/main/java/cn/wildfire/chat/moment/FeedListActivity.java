@@ -423,7 +423,6 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
 
     private void takeShortVideo() {
         Intent intent = new Intent(this, TakePhotoActivity.class);
-        intent.putExtra(TakePhotoActivity.MODE, TakePhotoActivity.MODE_RECORDER_ONLY);
         startActivityForResult(intent, REQUEST_CODE_RECORDER_VIDEO);
     }
 

@@ -250,7 +250,7 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
             List<FeedEntry> feedEntries = new ArrayList<>();
             feed.medias = feedEntries;
             if (nineGridAdapter != null) {
-                if (!TextUtils.isEmpty(videoPath)) {
+                if (!TextUtils.isEmpty(videoPath) && !videoPath.endsWith(".png")) {
                     feed.type = FeedContentType.Content_Video_Type;
                     FeedEntry feedEntry = new FeedEntry();
                     String videoUrl = MomentClient.uploadMediaSync(videoPath);
