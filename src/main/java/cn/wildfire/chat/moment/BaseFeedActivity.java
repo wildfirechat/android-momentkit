@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.moment.third.Constants;
 import cn.wildfire.chat.moment.third.adapters.FriendCircleAdapter;
 import cn.wildfire.chat.moment.third.beans.CommentBean;
@@ -31,7 +32,6 @@ import cn.wildfire.chat.moment.third.others.FriendsCircleAdapterDivideLine;
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.CommentOrPraisePopupWindow;
 import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
-import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.FeedCommentType;
 import cn.wildfirechat.moment.MomentClient;
@@ -54,10 +54,13 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
 
     private CommentOrPraisePopupWindow mCommentOrPraisePopupWindow;
 
+    protected UserInfo user = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(contentLayoutResId());
+        user = getIntent().getParcelableExtra("userInfo");
 
         initView();
     }
@@ -159,7 +162,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         } else {
             if (praiseBeans.contains(praiseBean)) {
                 int i = praiseBeans.indexOf(praiseBean);
-                MomentClient.getInstance().deleteComment(praiseBeans.get(i).getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
+                MomentClient.getInstance().deleteComment(user.uid, praiseBeans.get(i).getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
                     @Override
                     public void onSuccess() {
                         praiseBeans.remove(praiseBean);
@@ -409,8 +412,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
     protected void deleteFeed(int feedPosition) {
         List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getmFriendCircleBeans();
         FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
-        List<CommentBean> commentBeans = friendCircleBean.getCommentBeans();
-        MomentClient.getInstance().deleteFeed(friendCircleBean.getId(), new MomentClient.GeneralCallback() {
+        MomentClient.getInstance().deleteFeed(user.uid, friendCircleBean.getId(), new MomentClient.GeneralCallback() {
             @Override
             public void onSuccess() {
                 friendCircleBeans.remove(feedPosition);
@@ -429,7 +431,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
         List<CommentBean> commentBeans = friendCircleBean.getCommentBeans();
         CommentBean commentBean = commentBeans.get(commentPosition);
-        MomentClient.getInstance().deleteComment(commentBean.getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
+        MomentClient.getInstance().deleteComment(user.uid, commentBean.getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
             @Override
             public void onSuccess() {
                 commentBeans.remove(commentBean);

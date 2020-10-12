@@ -60,12 +60,10 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
     private static final int REQUEST_CODE_PUBLISH_FEED = 102;
     private static final int REQUEST_CODE_PICK_PROFILE_BACKGROUND_PHOTO = 103;
 
-    private UserInfo user = null;
     private boolean isLoadingOldFeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        user = getIntent().getParcelableExtra("userInfo");
         super.onCreate(savedInstanceState);
         MomentClient.getInstance().setMomentMessageReceiveListener(this);
     }
