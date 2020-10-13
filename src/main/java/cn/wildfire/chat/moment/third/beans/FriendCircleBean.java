@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wildfire.chat.kit.mm.MediaEntry;
+import cn.wildfire.chat.kit.third.utils.TimeUtils;
 import cn.wildfire.chat.moment.third.Constants;
 import cn.wildfire.chat.moment.third.utils.SpanUtils;
 import cn.wildfire.chat.moment.third.utils.Utils;
@@ -114,6 +115,8 @@ public class FriendCircleBean {
             }
             friendCircleBean.mediaEntries = mediaEntries;
         }
+        friendCircleBean.otherInfoBean =  new OtherInfoBean();
+        friendCircleBean.otherInfoBean.setTime(TimeUtils.getMsgFormatTime(feed.serverTime));
 
         return friendCircleBean;
     }
