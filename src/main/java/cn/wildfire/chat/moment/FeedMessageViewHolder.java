@@ -91,9 +91,9 @@ public class FeedMessageViewHolder extends RecyclerView.ViewHolder {
                     descTextView.setText(feed.text == null ? "" : feed.text);
                 } else {
                     if (feed.medias != null && !feed.medias.isEmpty()) {
-                        GlideApp.with(descImageView).load(feed.medias.get(0).thumbUrl).into(descImageView);
+                        GlideApp.with(descImageView).load(feed.medias.get(0).mediaUrl).into(descImageView);
                     }
-                    descTextView.setText(feed.text == null ? "" : feed.text);
+                    descTextView.setText("");
                 }
 
             }
