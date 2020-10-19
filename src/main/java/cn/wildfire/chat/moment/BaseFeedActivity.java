@@ -110,6 +110,11 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         return friendCircleBeans;
     }
 
+    protected FriendCircleBean feedToFriendCircleBean(Feed feed) {
+        FriendCircleBean friendCircleBean = FriendCircleBean.fromFeed(BaseFeedActivity.this, feed);
+        return friendCircleBean;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.mm.MMPreviewActivity;
 import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.moment.third.Constants;
@@ -30,7 +31,6 @@ import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
 import cn.wildfire.chat.moment.third.utils.Utils;
-import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.model.Profile;
 
@@ -118,6 +118,14 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void setFriendCircleBeans(List<FriendCircleBean> friendCircleBeans) {
         this.mFriendCircleBeans = friendCircleBeans;
         notifyDataSetChanged();
+    }
+
+    public void updateFriendCircleBean(int index, FriendCircleBean friendCircleBean) {
+        if (this.mFriendCircleBeans == null || this.mFriendCircleBeans.isEmpty() || index >= this.mFriendCircleBeans.size()) {
+            return;
+        }
+        this.mFriendCircleBeans.set(index, friendCircleBean);
+        notifyItemChanged(headerCount() + index);
     }
 
     public void setProfile(Profile profile) {

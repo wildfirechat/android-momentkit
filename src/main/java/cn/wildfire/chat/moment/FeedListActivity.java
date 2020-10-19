@@ -23,17 +23,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.mm.TakePhotoActivity;
 import cn.wildfire.chat.moment.third.adapters.HostViewHolder;
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.TitleBar;
 import cn.wildfire.chat.moment.thirdbar.TitleBarAlphaChangeHelper;
-import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.message.Message;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.MomentClient;
 import cn.wildfirechat.moment.OnReceiveFeedMessageListener;
+import cn.wildfirechat.moment.message.FeedCommentMessageContent;
 import cn.wildfirechat.moment.model.Feed;
 import cn.wildfirechat.moment.model.Profile;
 import cn.wildfirechat.remote.ChatManager;
@@ -61,6 +62,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
     private static final int REQUEST_CODE_PICK_PROFILE_BACKGROUND_PHOTO = 103;
 
     private boolean isLoadingOldFeed;
+    private List<Feed> feeds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,7 +248,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
 
     protected void loadFeeds() {
         showRefreshing();
-        List<Feed> feeds = MomentClient.getInstance().restoreCache(user == null ? "all" : user.uid);
+        feeds = MomentClient.getInstance().restoreCache(user == null ? "all" : user.uid);
         if (!feeds.isEmpty()) {
             mFriendCircleAdapter.setFriendCircleBeans(feedsToFriendCircleBeans(feeds));
         }
@@ -265,6 +267,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
                 mFriendCircleAdapter.setFriendCircleBeans(feedsToFriendCircleBeans(feeds));
                 mFriendCircleAdapter.notifyDataSetChanged();
                 MomentClient.getInstance().storeCache(feeds, user == null ? "all" : user.uid);
+                FeedListActivity.this.feeds = feeds;
             }
 
             @Override
@@ -293,6 +296,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
                 mFriendCircleAdapter.hideLoadingOldFeedItem();
                 mFriendCircleAdapter.addFriendCircleBeans(feedsToFriendCircleBeans(feeds));
                 isLoadingOldFeed = false;
+                FeedListActivity.this.feeds.addAll(feeds);
             }
 
             @Override
@@ -427,11 +431,48 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
     @Override
     public void onReceiveFeedCommentMessage(Message feedCommentMessage) {
         updateUnreadFeedMessageCount();
+
+        long feedId = ((FeedCommentMessageContent) feedCommentMessage.content).getFeedId();
+        updateFeed(feedId);
     }
 
     @Override
     public void onReceiveFeedMessage(Message feedMessage) {
         updateUnreadFeedMessageCount();
+    }
+
+    private void updateFeed(long feedId) {
+        if (this.feeds == null || this.feeds.isEmpty()) {
+            // do nothing
+        } else {
+            int feedIndex = -1;
+            for (int i = 0; i < feeds.size(); i++) {
+                if (feeds.get(i).feedId == feedId) {
+                    feedIndex = i;
+                }
+            }
+            if (feedIndex > -1) {
+                int finalFeedIndex = feedIndex;
+                MomentClient.getInstance().getFeed(feedId, new MomentClient.GetFeedCallback() {
+                    @Override
+                    public void onSuccess(Feed feed) {
+                        if (isFinishing()) {
+                            return;
+                        }
+                        FriendCircleBean friendCircleBean = feedToFriendCircleBean(feed);
+                        mFriendCircleAdapter.updateFriendCircleBean(finalFeedIndex, friendCircleBean);
+                    }
+
+                    @Override
+                    public void onFailure(int errorCode) {
+                        if (isFinishing()) {
+                            return;
+                        }
+                    }
+                });
+            }
+
+        }
     }
 
     private void onUnreadFeedMessageCountClick() {
