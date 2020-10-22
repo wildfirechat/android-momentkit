@@ -167,7 +167,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         } else {
             if (praiseBeans.contains(praiseBean)) {
                 int i = praiseBeans.indexOf(praiseBean);
-                MomentClient.getInstance().deleteComment(user.uid, praiseBeans.get(i).getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
+                MomentClient.getInstance().deleteComment(user != null ? user.uid : null, praiseBeans.get(i).getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
                     @Override
                     public void onSuccess() {
                         praiseBeans.remove(praiseBean);
@@ -417,7 +417,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
     protected void deleteFeed(int feedPosition) {
         List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getmFriendCircleBeans();
         FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
-        MomentClient.getInstance().deleteFeed(user.uid, friendCircleBean.getId(), new MomentClient.GeneralCallback() {
+        MomentClient.getInstance().deleteFeed(user != null ? user.uid : null, friendCircleBean.getId(), new MomentClient.GeneralCallback() {
             @Override
             public void onSuccess() {
                 friendCircleBeans.remove(feedPosition);
@@ -436,7 +436,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
         List<CommentBean> commentBeans = friendCircleBean.getCommentBeans();
         CommentBean commentBean = commentBeans.get(commentPosition);
-        MomentClient.getInstance().deleteComment(user.uid, commentBean.getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
+        MomentClient.getInstance().deleteComment(user != null ? user.uid : null, commentBean.getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
             @Override
             public void onSuccess() {
                 commentBeans.remove(commentBean);
