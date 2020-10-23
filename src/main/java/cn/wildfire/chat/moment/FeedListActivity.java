@@ -22,6 +22,8 @@ import com.lqr.imagepicker.bean.ImageItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.mm.TakePhotoActivity;
@@ -248,7 +250,8 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
 
     protected void loadFeeds() {
         showRefreshing();
-        feeds = MomentClient.getInstance().restoreCache(user == null ? "all" : user.uid);
+        feeds = MomentClient.getInstance().restoreCache(user == null ? null : user.uid);
+        feeds = latest3DayFeeds(feeds);
         if (!feeds.isEmpty()) {
             mFriendCircleAdapter.setFriendCircleBeans(feedsToFriendCircleBeans(feeds));
         }
@@ -256,6 +259,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
             @Override
             public void onSuccess(List<Feed> feeds) {
                 resetRefreshing();
+                feeds = latest3DayFeeds(feeds);
                 if (feeds == null || feeds.isEmpty()) {
                     mFriendCircleAdapter.showVisibleScopeItem();
                     return;
@@ -266,7 +270,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
                 }
                 mFriendCircleAdapter.setFriendCircleBeans(feedsToFriendCircleBeans(feeds));
                 mFriendCircleAdapter.notifyDataSetChanged();
-                MomentClient.getInstance().storeCache(feeds, user == null ? "all" : user.uid);
+                MomentClient.getInstance().storeCache(feeds, user == null ? null : user.uid);
                 FeedListActivity.this.feeds = feeds;
             }
 
@@ -289,12 +293,16 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
         MomentClient.getInstance().getFeeds(fromIndex, 20, user == null ? null : user.uid, new MomentClient.GetFeedsCallback() {
             @Override
             public void onSuccess(List<Feed> feeds) {
-                if (feeds == null || feeds.isEmpty() || feeds.size() < 20) {
+                feeds = latest3DayFeeds(feeds);
+                if (feeds == null || feeds.isEmpty()) {
                     mFriendCircleAdapter.showVisibleScopeItem();
                     return;
                 }
                 mFriendCircleAdapter.hideLoadingOldFeedItem();
                 mFriendCircleAdapter.addFriendCircleBeans(feedsToFriendCircleBeans(feeds));
+                if (feeds.size() < 20) {
+                    mFriendCircleAdapter.showVisibleScopeItem();
+                }
                 isLoadingOldFeed = false;
                 FeedListActivity.this.feeds.addAll(feeds);
             }
@@ -305,6 +313,20 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
                 isLoadingOldFeed = false;
             }
         });
+    }
+
+    private List<Feed> latest3DayFeeds(List<Feed> feeds) {
+        if (feeds == null || feeds.isEmpty()) {
+            return feeds;
+        }
+
+        long now = System.currentTimeMillis();
+        return feeds.stream().filter(new Predicate<Feed>() {
+            @Override
+            public boolean test(Feed feed) {
+                return now - feed.serverTime <= 3 * 24 * 60 * 60 * 1000;
+            }
+        }).collect(Collectors.toList());
     }
 
     @Override
