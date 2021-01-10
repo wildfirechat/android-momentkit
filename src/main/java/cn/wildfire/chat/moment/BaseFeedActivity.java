@@ -150,7 +150,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         praiseBean.setPraiseUserName(userInfo.displayName);
         if (praiseBeans == null) {
             List<PraiseBean> beans = new ArrayList<>();
-            MomentClient.getInstance().postComment(FeedCommentType.Comment_Thumbup_Type, friendCircleBean.getId(), null, null, null, new MomentClient.PostCallback() {
+            MomentClient.getInstance().postComment(FeedCommentType.Comment_Thumbup_Type, friendCircleBean.getId(), null, null, 0, null, new MomentClient.PostCallback() {
                 @Override
                 public void onSuccess(long id, long timestamp) {
                     praiseBean.setId(id);
@@ -181,7 +181,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
                     }
                 });
             } else {
-                MomentClient.getInstance().postComment(FeedCommentType.Comment_Thumbup_Type, friendCircleBean.getId(), null, null, null, new MomentClient.PostCallback() {
+                MomentClient.getInstance().postComment(FeedCommentType.Comment_Thumbup_Type, friendCircleBean.getId(), null, null, 0, null, new MomentClient.PostCallback() {
                     @Override
                     public void onSuccess(long id, long timestamp) {
                         praiseBean.setId(id);
@@ -331,7 +331,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
 
     public void commentFeed(long feedId, String comment) {
         int position = mFriendCircleAdapter.getFeedPosition(feedId);
-        MomentClient.getInstance().postComment(FeedCommentType.Comment_Comment_Type, feedId, comment, null, null, new MomentClient.PostCallback() {
+        MomentClient.getInstance().postComment(FeedCommentType.Comment_Comment_Type, feedId, comment, null, 0, null, new MomentClient.PostCallback() {
             @Override
             public void onSuccess(long id, long timestamp) {
                 FriendCircleBean friendCircleBean = mFriendCircleAdapter.getFriendCircleBean(feedId);
@@ -362,7 +362,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
     public void replyComment(long feedId, long commentId, String comment) {
         int position = mFriendCircleAdapter.getFeedPosition(feedId);
         CommentBean parentCommentBean = mFriendCircleAdapter.getCommentBean(feedId, commentId);
-        MomentClient.getInstance().postComment(FeedCommentType.Comment_Comment_Type, feedId, comment, parentCommentBean.getChildUserId(), null, new MomentClient.PostCallback() {
+        MomentClient.getInstance().postComment(FeedCommentType.Comment_Comment_Type, feedId, comment, parentCommentBean.getChildUserId(), commentId, null, new MomentClient.PostCallback() {
             @Override
             public void onSuccess(long id, long timestamp) {
                 FriendCircleBean friendCircleBean = mFriendCircleAdapter.getFriendCircleBean(feedId);
