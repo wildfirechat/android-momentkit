@@ -167,7 +167,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         } else {
             if (praiseBeans.contains(praiseBean)) {
                 int i = praiseBeans.indexOf(praiseBean);
-                MomentClient.getInstance().deleteComment(user != null ? user.uid : null, praiseBeans.get(i).getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
+                MomentClient.getInstance().deleteComment(user != null ? user.uid : null, friendCircleBean.getId(), praiseBeans.get(i).getId(), new MomentClient.GeneralCallback() {
                     @Override
                     public void onSuccess() {
                         praiseBeans.remove(praiseBean);
@@ -436,7 +436,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
         List<CommentBean> commentBeans = friendCircleBean.getCommentBeans();
         CommentBean commentBean = commentBeans.get(commentPosition);
-        MomentClient.getInstance().deleteComment(user != null ? user.uid : null, commentBean.getId(), friendCircleBean.getId(), new MomentClient.GeneralCallback() {
+        MomentClient.getInstance().deleteComment(user != null ? user.uid : null, friendCircleBean.getId(), commentBean.getId(), new MomentClient.GeneralCallback() {
             @Override
             public void onSuccess() {
                 commentBeans.remove(commentBean);
