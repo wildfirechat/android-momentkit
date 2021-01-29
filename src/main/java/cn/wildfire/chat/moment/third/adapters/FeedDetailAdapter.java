@@ -182,7 +182,7 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else if (holder instanceof WordAndImagesViewHolder) {
                 WordAndImagesViewHolder wordAndImagesViewHolder = (WordAndImagesViewHolder) holder;
                 wordAndImagesViewHolder.nineGridView.setOnImageClickListener((position1, view) ->
-                    MMPreviewActivity.startActivity(mContext, friendCircleBean.getMediaEntries(), position1));
+                    MMPreviewActivity.previewMedia(mContext, friendCircleBean.getMediaEntries(), position1));
                 wordAndImagesViewHolder.nineGridView.setAdapter(new NineImageAdapter(mContext, mRequestOptions,
                     mDrawableTransitionOptions, friendCircleBean.getMediaEntries()));
             }

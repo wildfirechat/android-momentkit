@@ -296,7 +296,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 } else if (holder instanceof WordAndImagesViewHolder) {
                     WordAndImagesViewHolder wordAndImagesViewHolder = (WordAndImagesViewHolder) holder;
                     wordAndImagesViewHolder.nineGridView.setOnImageClickListener((position1, view) ->
-                        MMPreviewActivity.startActivity(mContext, friendCircleBean.getMediaEntries(), position1));
+                        MMPreviewActivity.previewMedia(mContext, friendCircleBean.getMediaEntries(), position1));
                     wordAndImagesViewHolder.nineGridView.setAdapter(new NineImageAdapter(mContext, mRequestOptions,
                         mDrawableTransitionOptions, friendCircleBean.getMediaEntries()));
                 }
