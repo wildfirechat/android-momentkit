@@ -22,8 +22,6 @@ import com.lqr.imagepicker.bean.ImageItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.mm.TakePhotoActivity;
@@ -33,7 +31,6 @@ import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.TitleBar;
 import cn.wildfire.chat.moment.thirdbar.TitleBarAlphaChangeHelper;
 import cn.wildfirechat.message.Message;
-import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.MomentClient;
 import cn.wildfirechat.moment.OnReceiveFeedMessageListener;
 import cn.wildfirechat.moment.message.FeedCommentMessageContent;
@@ -156,12 +153,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
             }
         });
 
-        if (user == null) {
-            UserInfo userInfo = ChatManager.Instance().getUserInfo(ChatManager.Instance().getUserId(), false);
-            mFriendCircleAdapter.setUserInfo(userInfo);
-        } else {
-            mFriendCircleAdapter.setUserInfo(user);
-        }
+        mFriendCircleAdapter.setUserInfo(user);
 
         loadProfile();
         loadFeeds();
@@ -251,7 +243,6 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
     protected void loadFeeds() {
         showRefreshing();
         feeds = MomentClient.getInstance().restoreCache(user == null ? null : user.uid);
-        feeds = latest3DayFeeds(feeds);
         if (!feeds.isEmpty()) {
             mFriendCircleAdapter.setFriendCircleBeans(feedsToFriendCircleBeans(feeds));
         }
@@ -259,7 +250,6 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
             @Override
             public void onSuccess(List<Feed> feeds) {
                 resetRefreshing();
-                feeds = latest3DayFeeds(feeds);
                 if (feeds == null || feeds.isEmpty()) {
                     mFriendCircleAdapter.showVisibleScopeItem();
                     return;
@@ -293,7 +283,6 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
         MomentClient.getInstance().getFeeds(fromIndex, 20, user == null ? null : user.uid, new MomentClient.GetFeedsCallback() {
             @Override
             public void onSuccess(List<Feed> feeds) {
-                feeds = latest3DayFeeds(feeds);
                 if (feeds == null || feeds.isEmpty()) {
                     mFriendCircleAdapter.showVisibleScopeItem();
                     return;
@@ -313,20 +302,6 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
                 isLoadingOldFeed = false;
             }
         });
-    }
-
-    private List<Feed> latest3DayFeeds(List<Feed> feeds) {
-        if (feeds == null || feeds.isEmpty()) {
-            return feeds;
-        }
-
-        long now = System.currentTimeMillis();
-        return feeds.stream().filter(new Predicate<Feed>() {
-            @Override
-            public boolean test(Feed feed) {
-                return now - feed.serverTime <= 3 * 24 * 60 * 60 * 1000;
-            }
-        }).collect(Collectors.toList());
     }
 
     @Override

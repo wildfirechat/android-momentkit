@@ -33,6 +33,7 @@ import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWind
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.model.Profile;
+import cn.wildfirechat.remote.ChatManager;
 
 /**
  * @author KCrason
@@ -304,6 +305,28 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (holder instanceof HostViewHolder) {
             // header
             ((HostViewHolder) holder).bind(mContext, userInfo, profile);
+        } else if (holder instanceof VisibleScopeViewHolder) {
+            String selfUid = ChatManager.Instance().getUserId();
+            // 朋友圈首页
+            if (userInfo == null || selfUid.equals(userInfo.uid)) {
+                ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.INVISIBLE);
+            } else {
+                if (ChatManager.Instance().isMyFriend(userInfo.uid)){
+                    if (profile.visibleScope == 0){
+                        ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.INVISIBLE);
+                    }else {
+                        ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.VISIBLE);
+                        ((VisibleScopeViewHolder) holder).visibleScopeTextView.setText("只展示" + profile.visibleScope + "天朋友圈");
+                    }
+                }else {
+                    if (profile.strangerVisibleCount == 0){
+                        ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.INVISIBLE);
+                    }else {
+                        ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.VISIBLE);
+                        ((VisibleScopeViewHolder) holder).visibleScopeTextView.setText("只向陌生人展示" + profile.strangerVisibleCount + "条朋友圈");
+                    }
+                }
+            }
         }
     }
 
