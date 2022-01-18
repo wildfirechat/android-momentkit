@@ -311,19 +311,37 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (userInfo == null || selfUid.equals(userInfo.uid)) {
                 ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.INVISIBLE);
             } else {
-                if (ChatManager.Instance().isMyFriend(userInfo.uid)){
-                    if (profile.visibleScope == 0){
+                if (ChatManager.Instance().isMyFriend(userInfo.uid)) {
+                    if (profile.visibleScope == Profile.VisibleScope.VisibleScope_NoLimit) {
                         ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.INVISIBLE);
-                    }else {
+                    } else {
+                        String desc;
+                        if (profile.visibleScope == Profile.VisibleScope.VisibleScope_3Days) {
+                            desc = "只展示最近3天的朋友圈";
+                        } else if (profile.visibleScope == Profile.VisibleScope.VisibleScope_1Month) {
+                            desc = "只展示最近 一个月的朋友圈";
+                            //VisibleScope_6Months = 3;
+                        } else {
+                            desc = "只展示最近半年的朋友圈";
+                        }
                         ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.VISIBLE);
-                        ((VisibleScopeViewHolder) holder).visibleScopeTextView.setText("只展示" + profile.visibleScope + "天朋友圈");
+                        ((VisibleScopeViewHolder) holder).visibleScopeTextView.setText(desc);
                     }
-                }else {
-                    if (profile.strangerVisibleCount == 0){
+                } else {
+                    if (profile.strangerVisibleCount == 0) {
                         ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.INVISIBLE);
-                    }else {
+                    } else {
+                        String desc;
+                        if (profile.strangerVisibleCount == Profile.VisibleScope.VisibleScope_3Days) {
+                            desc = "只展示最近3天的朋友圈";
+                        } else if (profile.strangerVisibleCount == Profile.VisibleScope.VisibleScope_1Month) {
+                            desc = "只展示最近 一个月的朋友圈";
+                            //VisibleScope_6Months = 3;
+                        } else {
+                            desc = "只展示最近半年的朋友圈";
+                        }
                         ((VisibleScopeViewHolder) holder).visibleScopeLinearLayout.setVisibility(View.VISIBLE);
-                        ((VisibleScopeViewHolder) holder).visibleScopeTextView.setText("只向陌生人展示" + profile.strangerVisibleCount + "条朋友圈");
+                        ((VisibleScopeViewHolder) holder).visibleScopeTextView.setText(desc);
                     }
                 }
             }
