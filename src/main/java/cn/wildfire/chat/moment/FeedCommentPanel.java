@@ -155,14 +155,14 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
     }
 
     private void hideEmotionLayout() {
-        emotionImageView.setImageResource(R.mipmap.ic_cheat_emo);
+        emotionImageView.setImageResource(R.mipmap.ic_chat_emo);
         if (onConversationInputPanelStateChangeListener != null) {
             onConversationInputPanelStateChangeListener.onInputPanelCollapsed();
         }
     }
 
     void collapse() {
-        emotionImageView.setImageResource(R.mipmap.ic_cheat_emo);
+        emotionImageView.setImageResource(R.mipmap.ic_chat_emo);
         rootLinearLayout.hideAttachedInput(true);
         rootLinearLayout.hideCurrentInput(editText);
     }

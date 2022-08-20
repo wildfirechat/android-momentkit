@@ -51,7 +51,7 @@
                 android:layout_gravity="bottom"
                 android:layout_margin="5dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_cheat_emo" />
+                android:src="@mipmap/ic_chat_emo" />
 
             <Button
                 android:id="@+id/sendButton"
