@@ -148,7 +148,7 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
     }
 
     private void showEmotionLayout() {
-        emotionImageView.setImageResource(R.mipmap.ic_cheat_keyboard);
+        emotionImageView.setImageResource(R.mipmap.ic_chat_keyboard);
         if (onConversationInputPanelStateChangeListener != null) {
             onConversationInputPanelStateChangeListener.onInputPanelExpanded();
         }
