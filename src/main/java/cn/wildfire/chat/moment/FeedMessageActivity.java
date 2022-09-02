@@ -2,15 +2,16 @@ package cn.wildfire.chat.moment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
-import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.message.Message;
 import cn.wildfirechat.moment.MomentClient;
 import cn.wildfirechat.remote.ChatManager;
@@ -50,6 +51,7 @@ public class FeedMessageActivity extends BaseTitleBarActivity implements OnFeedU
         feedMessagAdapter.setOnLoadMoreMessageClickListener(this);
 
         List<Message> messages = MomentClient.getInstance().getFeedMessages(0, true);
+
         feedMessagAdapter.setFeedMessages(messages);
         feedMessagAdapter.notifyDataSetChanged();
         MomentClient.getInstance().clearUnreadStatus();
@@ -101,6 +103,10 @@ public class FeedMessageActivity extends BaseTitleBarActivity implements OnFeedU
             insertPosition = feedMessages.size();
         }
         feedMessages = MomentClient.getInstance().getFeedMessages(msgId, false);
+        if (feedMessages.size() == 0) {
+            Toast.makeText(this, "没有更多消息", Toast.LENGTH_SHORT).show();
+            return;
+        }
         feedMessagAdapter.addFeedMessages(feedMessages);
         feedMessagAdapter.notifyItemRangeInserted(insertPosition, feedMessages.size());
     }
