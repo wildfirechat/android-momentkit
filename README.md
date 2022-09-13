@@ -28,24 +28,19 @@
 
 1. 联系官方，购买```moment client aar```相关授权。
 
-2. 将***本仓库***下载到和```android-chat```的同级目录，并确保***本仓库***下载之后的目录名字是```android-momentkit```
+2. 将***本仓库***下载到和```android-chat```的同级目录，并确保***本仓库***下载之后的目录名字是```android-momentkit```，***比如```android-chat```和```android-momentkit```都在```workspace```目录之下，不是将```android-momentkit```放到```android-chat```目录之下***
 
-3. ```android-chat```项目中新建```aar module```，将```moment client aar```引入，具体如下：
-   1. Android Studio -> File -> New -> New Module -> Import .JAR/.AAR Package 
-   2. Import Module From Library 界面 File name：选择步骤1中购买的aar文件；Subproject name 填写```momentclient```
-   3. Finish，完成之后，```android-chat```项目根目录下的```settting.gradle```会新增一行```include ':momentclient'```，并且```android-chat```项目根目录下会新增一个```momentclient```目录。
-
+3. 将第一步中获取到的```momentclient-release.aar```放到```android-chat/uikit/libs```目录下
 4. 修改```android-chat/uikit/build.gradle```，将以下部分取消注释：
 
       ```
       //            java.srcDirs += ['../../android-momentkit/src/main/java']
       //            res.srcDirs += ['../../android-momentkit/src/main/res-moment']
-      
-      //    implementation project(':momentclient') //和步骤3中填写的Subproject name一致
+
       //    api 'me.everything:overscroll-decor-android:1.0.4'
       ```
 
-5. 修改```uikit/src/main/AndroidManifest.xml```，将以下取消注释：
+5. 修改```android-chat/uikit/src/main/AndroidManifest.xml```，将以下取消注释：
 
       ```
       <!--        <activity android:name="cn.wildfire.chat.moment.PublishFeedActivity" />-->
@@ -58,7 +53,7 @@
       <!--            </intent-filter>-->
       <!--        </activity>-->
       <!--        <activity android:name="cn.wildfire.chat.moment.FeedVisibleScopeActivity" />-->
-      
+
       ```
 
 ## 感谢
