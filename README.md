@@ -55,7 +55,9 @@
       <!--        <activity android:name="cn.wildfire.chat.moment.FeedVisibleScopeActivity" />-->
 
       ```
+6. 如果是命令打包的话，请执行如下命令，其中```chat```是```applicaiton module```的名字，需根据实际情况修改
 
+   ```./gradlew build -p chat```
 ## 感谢
 
 本项目基于[HighPerformanceFriendsCircle](https://github.com/Micrason/HighPerformanceFriendsCircle)和[MultiWeChat](https://github.com/MsPenghao/MultiWeChat)开发，在此，对他们的无私奉献表示感谢。
