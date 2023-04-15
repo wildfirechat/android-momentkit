@@ -9,17 +9,12 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.wildfire.chat.kit.contact.pick.PickContactActivity;
 import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
 import cn.wildfire.chat.kit.R;
-import cn.wildfire.chat.kit.R2;
 import cn.wildfirechat.model.UserInfo;
 
 public class FeedVisibleScopeActivity extends BaseTitleBarActivity {
-    @BindView(R2.id.radioGroup)
     RadioGroup radioGroup;
 
     private static final int REQUEST_CODE_PICK_TO_BLOCK = 100;
@@ -44,8 +39,16 @@ public class FeedVisibleScopeActivity extends BaseTitleBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feed_visible_scope_activity);
-        ButterKnife.bind(this);
+        bindViews();
         init();
+    }
+
+    private void bindViews() {
+        radioGroup = findViewById(R.id.radioGroup);
+        findViewById(R.id.privateLinearLayout).setOnClickListener(v -> privateScope());
+        findViewById(R.id.allLinearLayout).setOnClickListener(v -> allScope());
+        findViewById(R.id.partLinearLayout).setOnClickListener(v -> partScope());
+        findViewById(R.id.blockLinearLayout).setOnClickListener(v -> blockScope());
     }
 
     private void init() {
@@ -95,19 +98,16 @@ public class FeedVisibleScopeActivity extends BaseTitleBarActivity {
         finish();
     }
 
-    @OnClick(R2.id.privateLinearLayout)
     void privateScope() {
         radioGroup.check(R.id.privateRadioButton);
         mode = VISIBLE_MODE_PRIVATE;
     }
 
-    @OnClick(R2.id.allLinearLayout)
     void allScope() {
         radioGroup.check(R.id.allRadioButton);
         mode = VISIBLE_MODE_ALL;
     }
 
-    @OnClick(R2.id.partLinearLayout)
     void partScope() {
         radioGroup.check(R.id.partRadioButton);
         Intent intent;
@@ -121,7 +121,6 @@ public class FeedVisibleScopeActivity extends BaseTitleBarActivity {
         mode = VISIBLE_MODE_PART;
     }
 
-    @OnClick(R2.id.blockLinearLayout)
     void blockScope() {
         radioGroup.check(R.id.blockRadioButton);
         Intent intent;

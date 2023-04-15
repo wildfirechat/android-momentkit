@@ -24,29 +24,19 @@ import com.lqr.emoji.IEmotionSelectedListener;
 import com.lqr.emoji.LQREmotionKit;
 import com.lqr.emoji.MoonUtils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import cn.wildfire.chat.kit.widget.InputAwareLayout;
 import cn.wildfire.chat.kit.widget.KeyboardHeightFrameLayout;
 import cn.wildfire.chat.kit.R;
-import cn.wildfire.chat.kit.R2;
+import cn.wildfire.chat.kit.widget.SimpleTextWatcher;
 
 public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedListener {
 
-    @BindView(R2.id.editText)
     EditText editText;
-    @BindView(R2.id.emotionImageView)
     ImageView emotionImageView;
-    @BindView(R2.id.sendButton)
     Button sendButton;
 
-    @BindView(R2.id.emotionContainerFrameLayout)
     KeyboardHeightFrameLayout emotionContainerFrameLayout;
-    @BindView(R2.id.emotionLayout)
     EmotionLayout emotionLayout;
-    @BindView(R2.id.inputContainerLinearLayout)
     LinearLayout inputContainerLinearLayout;
 
     private InputAwareLayout rootLinearLayout;
@@ -90,7 +80,7 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
 
     public void init(CommentFragment commentFragment, InputAwareLayout rootInputAwareLayout) {
         LayoutInflater.from(getContext()).inflate(R.layout.feed_comment_panel, this, true);
-        ButterKnife.bind(this, this);
+        bindViews();
 
         this.commentFragment = commentFragment;
         this.rootLinearLayout = rootInputAwareLayout;
@@ -102,7 +92,24 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
         emotionLayout.setEmotionSelectedListener(this);
     }
 
-    @OnClick(R2.id.emotionImageView)
+    private void bindViews() {
+        editText = findViewById(R.id.editText);
+        emotionImageView = findViewById(R.id.emotionImageView);
+        sendButton = findViewById(R.id.sendButton);
+        emotionContainerFrameLayout = findViewById(R.id.emotionContainerFrameLayout);
+        emotionLayout = findViewById(R.id.emotionLayout);
+        inputContainerLinearLayout = findViewById(R.id.inputContainerLinearLayout);
+
+        emotionImageView.setOnClickListener(v -> onEmotionImageViewClick());
+        editText.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                afterInputTextChanged(s);
+            }
+        });
+        sendButton.setOnClickListener(v -> sendMessage());
+    }
+
     void onEmotionImageViewClick() {
         if (rootLinearLayout.getCurrentInput() == emotionContainerFrameLayout) {
             rootLinearLayout.showSoftkey(editText);
@@ -113,12 +120,6 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
         }
     }
 
-    @OnTextChanged(value = R2.id.editText, callback = OnTextChanged.Callback.TEXT_CHANGED)
-    void onInputTextChanged(CharSequence s, int start, int before, int count) {
-        // do nothing
-    }
-
-    @OnTextChanged(value = R2.id.editText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterInputTextChanged(Editable editable) {
         if (editText.getText().toString().trim().length() > 0) {
             sendButton.setEnabled(true);
@@ -127,7 +128,6 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
         }
     }
 
-    @OnClick(R2.id.sendButton)
     void sendMessage() {
         commentEmojiCount = 0;
         Editable content = editText.getText();

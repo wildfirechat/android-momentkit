@@ -26,12 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.wildfire.chat.kit.Config;
 import cn.wildfire.chat.kit.R;
-import cn.wildfire.chat.kit.R2;
 import cn.wildfire.chat.kit.contact.pick.PickContactActivity;
 import cn.wildfire.chat.kit.widget.OptionItemView;
 import cn.wildfire.chat.moment.third.widgets.NineGridView;
@@ -44,13 +40,9 @@ import cn.wildfirechat.moment.model.FeedEntry;
 import cn.wildfirechat.remote.ChatManager;
 
 public class PublishFeedActivity extends BaseTitleBarActivity implements NineGridView.OnImageClickListener {
-    @BindView(R2.id.publish_input)
     EditText editText;
-    @BindView(R2.id.preview_image_content)
     NineGridView nineGridView;
-    @BindView(R2.id.mentionOptionItemView)
     OptionItemView mentionOptionItemView;
-    @BindView(R2.id.visibleScopeOptionItemView)
     OptionItemView visibleScopeOptionItemView;
 
     private FeedMediaContentAdapter nineGridAdapter;
@@ -72,9 +64,20 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
-        ButterKnife.bind(this);
+        bindViews();
         init();
     }
+
+    private void bindViews() {
+        editText = findViewById(R.id.publish_input);
+        nineGridView = findViewById(R.id.preview_image_content);
+        mentionOptionItemView = findViewById(R.id.mentionOptionItemView);
+        visibleScopeOptionItemView = findViewById(R.id.visibleScopeOptionItemView);
+
+        mentionOptionItemView.setOnClickListener(v -> mention());
+        visibleScopeOptionItemView.setOnClickListener(v -> visibleScope());
+    }
+
 
     private void init() {
         videoPath = getIntent().getStringExtra(VIDEO_URL);
@@ -105,13 +108,11 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
         return false;
     }
 
-    @OnClick(R2.id.mentionOptionItemView)
     void mention() {
         Intent intent = PickContactActivity.buildPickIntent(this, 0, mentionUids, blockUids);
         startActivityForResult(intent, REQUEST_CODE_PICK_TO_MENTION);
     }
 
-    @OnClick(R2.id.visibleScopeOptionItemView)
     void visibleScope() {
         Intent intent = new Intent(this, FeedVisibleScopeActivity.class);
         intent.putExtra(FeedVisibleScopeActivity.PARAM_VISIBLE_MODE, mode);
