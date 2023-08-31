@@ -195,7 +195,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
         getTitleBar().getLeftTextView().setAlpha(0f);
         getTitleBar().setLeftText("朋友圈");
         setLeftTextColor(Color.parseColor("#040404"));
-        if (user == null) {
+        if (user == null || user.uid.equals(ChatManager.Instance().getUserId())) {
             setTitleMode(TitleBar.TitleBarMode.MODE_BOTH);
             setTitleRightIcon(R.drawable.ic_camera);
         } else {
