@@ -17,6 +17,7 @@ import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.kit.R;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.model.Profile;
+import cn.wildfirechat.remote.ChatManager;
 
 public class HostViewHolder extends RecyclerView.ViewHolder {
     private View rootView;
@@ -44,6 +45,9 @@ public class HostViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Context context, UserInfo userInfo, Profile profile) {
+        if (userInfo == null) {
+            userInfo = ChatManager.Instance().getUserInfo(ChatManager.Instance().getUserId(), false);
+        }
         if (userInfo != null) {
             hostid.setText(userInfo.displayName);
             GlideApp.with(context)
