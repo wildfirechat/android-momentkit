@@ -7,16 +7,16 @@ import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-import cn.wildfire.chat.kit.GlideApp;
+import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.mm.MediaEntry;
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.NineGridView;
-import cn.wildfire.chat.kit.R;
 
 /**
  * @author KCrason
@@ -63,7 +63,7 @@ public class NineImageAdapter implements NineGridView.NineGridAdapter<MediaEntry
             imageView = (ImageView) itemView;
         }
         MediaEntry entry = mImageBeans.get(position);
-        GlideApp.with(mContext).load(entry.getMediaUrl()).apply(mRequestOptions).transition(mDrawableTransitionOptions).into(imageView);
+        Glide.with(mContext).load(entry.getMediaUrl()).apply(mRequestOptions).transition(mDrawableTransitionOptions).into(imageView);
         return imageView;
     }
 }

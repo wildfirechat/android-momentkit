@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import cn.wildfire.chat.kit.GlideApp;
+import com.bumptech.glide.Glide;
+
 import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.third.utils.TimeUtils;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
@@ -91,7 +92,7 @@ public class FeedMessageViewHolder extends RecyclerView.ViewHolder {
                     descTextView.setText(feed.text == null ? "" : feed.text);
                 } else {
                     if (feed.medias != null && !feed.medias.isEmpty()) {
-                        GlideApp.with(descImageView).load(feed.medias.get(0).mediaUrl).into(descImageView);
+                        Glide.with(descImageView).load(feed.medias.get(0).mediaUrl).into(descImageView);
                     }
                     descTextView.setText("");
                 }
@@ -109,7 +110,7 @@ public class FeedMessageViewHolder extends RecyclerView.ViewHolder {
         userId = userInfo.uid;
 
         nameTextViw.setText(userInfo.displayName);
-        GlideApp.with(itemView).load(userInfo.portrait).placeholder(R.mipmap.avatar_def).into(portraitImageView);
+        Glide.with(itemView).load(userInfo.portrait).placeholder(R.mipmap.avatar_def).into(portraitImageView);
         timeTextView.setText(TimeUtils.getMsgFormatTime(message.serverTime));
     }
 

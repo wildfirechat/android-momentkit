@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
-import cn.wildfire.chat.kit.GlideApp;
-import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.kit.R;
+import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.model.Profile;
 import cn.wildfirechat.remote.ChatManager;
@@ -50,13 +50,13 @@ public class HostViewHolder extends RecyclerView.ViewHolder {
         }
         if (userInfo != null) {
             hostid.setText(userInfo.displayName);
-            GlideApp.with(context)
+            Glide.with(context)
                 .load(userInfo.portrait)
                 .apply(requestOptions)
                 .into(friend_avatar);
         }
         if (profile != null && !TextUtils.isEmpty(profile.backgroundUrl)) {
-            GlideApp.with(context).load(profile.backgroundUrl).placeholder(R.drawable.test_wallpic)
+            Glide.with(context).load(profile.backgroundUrl).placeholder(R.drawable.test_wallpic)
                 .into(friend_wall_pic);
         }
     }
