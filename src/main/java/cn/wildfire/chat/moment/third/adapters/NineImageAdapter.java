@@ -69,7 +69,7 @@ public class NineImageAdapter implements NineGridView.NineGridAdapter<MediaEntry
         RequestOptions requestOptions = mRequestOptions;
         if (mImageBeans.size() == 1) {
             MediaEntry entry = mImageBeans.get(0);
-            if (entry.getWidth() > 0) {
+            if (entry.getWidth() > 200) {
                 int[] size = ImageUtils.scaleDown(entry.getWidth(), entry.getHeight(), nineGridView.getSingleImageMaxWidth(), 720);
                 requestOptions = mRequestOptions.clone().override(size[0], size[1]);
             } else {

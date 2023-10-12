@@ -148,7 +148,7 @@ public class NineGridView extends ViewGroup implements ViewGroup.OnHierarchyChan
             this.singleImageMaxWidth = availableWidth;
         }
         if (childCount <= 1) {
-            if (mSingleWidth == 0) {
+            if (mSingleWidth < 200) {
                 mChildWidth = availableWidth * 3 / 5;
                 mChildHeight = mChildWidth;
             } else {
