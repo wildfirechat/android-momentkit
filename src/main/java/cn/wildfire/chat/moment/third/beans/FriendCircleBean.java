@@ -105,6 +105,8 @@ public class FriendCircleBean {
                 } else {
                     mediaEntry.setType(MediaEntry.TYPE_VIDEO);
                 }
+                mediaEntry.setWidth(entry.mediaWidth);
+                mediaEntry.setHeight(entry.mediaHeight);
                 mediaEntry.setMediaUrl(entry.mediaUrl);
                 mediaEntry.setThumbnailUrl(entry.thumbUrl);
                 mediaEntries.add(mediaEntry);

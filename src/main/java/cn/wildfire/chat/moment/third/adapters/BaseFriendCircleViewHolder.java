@@ -1,6 +1,7 @@
 package cn.wildfire.chat.moment.third.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,14 +78,19 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
                                  OnTogglePraiseOrCommentPopupWindowListener onTogglePraiseOrCommentPopupWindowListener) {
         this.mContext = context;
         if (!onlyPraise && !onlyComment) {
-            holder.txtContent.setText(friendCircleBean.getContentSpan());
-            setContentShowState(holder, friendCircleBean);
-            holder.txtContent.setOnLongClickListener(v -> {
-                if (onFeedItemLongClickListener != null) {
-                    onFeedItemLongClickListener.onFeedItemLongClick(v, position);
-                }
-                return true;
-            });
+            if (!TextUtils.isEmpty(friendCircleBean.getContentSpan())) {
+                holder.txtContent.setVisibility(View.VISIBLE);
+                holder.txtContent.setText(friendCircleBean.getContentSpan());
+                setContentShowState(holder, friendCircleBean);
+                holder.txtContent.setOnLongClickListener(v -> {
+                    if (onFeedItemLongClickListener != null) {
+                        onFeedItemLongClickListener.onFeedItemLongClick(v, position);
+                    }
+                    return true;
+                });
+            } else {
+                holder.txtContent.setVisibility(View.GONE);
+            }
 
             UserBean userBean = friendCircleBean.getUserBean();
             if (userBean != null) {

@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import cn.wildfire.chat.moment.third.others.SimpleWeakObjectPool;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.wildfire.chat.kit.third.utils.ImageUtils;
+import cn.wildfire.chat.moment.third.others.SimpleWeakObjectPool;
 
 /**
  * @author KCrason
@@ -24,6 +25,8 @@ public class NineGridView extends ViewGroup implements ViewGroup.OnHierarchyChan
     private int mSpace;
     private int mChildWidth;
     private int mChildHeight;
+
+    private int singleImageMaxWidth;
 
     private SimpleWeakObjectPool<View> IMAGE_POOL;
 
@@ -40,7 +43,7 @@ public class NineGridView extends ViewGroup implements ViewGroup.OnHierarchyChan
         setOnHierarchyChangeListener(this);
         IMAGE_POOL = new SimpleWeakObjectPool<>(5);
         mSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                5f, context.getResources().getDisplayMetrics());
+            5f, context.getResources().getDisplayMetrics());
     }
 
     private int mSingleWidth;
@@ -141,17 +144,19 @@ public class NineGridView extends ViewGroup implements ViewGroup.OnHierarchyChan
         final int minW = getPaddingLeft() + getPaddingRight() + getSuggestedMinimumWidth();
         int width = resolveSizeAndState(minW, widthMeasureSpec, 1);
         int availableWidth = width - getPaddingLeft() - getPaddingRight();
+        if (singleImageMaxWidth == 0) {
+            this.singleImageMaxWidth = availableWidth;
+        }
         if (childCount <= 1) {
             if (mSingleWidth == 0) {
-                mChildWidth = availableWidth * 2 / 5;
-            } else {
-                mChildWidth = availableWidth / 2;
-            }
-            if (mSingleHeight == 0) {
+                mChildWidth = availableWidth * 3 / 5;
                 mChildHeight = mChildWidth;
             } else {
-                mChildHeight = (int) ((mSingleHeight / (float) mSingleWidth) * mChildWidth);
+                int[] size = ImageUtils.scaleDown(mSingleWidth, mSingleHeight, availableWidth, 720);
+                mChildWidth = size[0];
+                mChildHeight = size[1];
             }
+
         } else {
             mChildWidth = (availableWidth - mSpace * (mColumns - 1)) / 3;
             mChildHeight = mChildWidth;
@@ -166,6 +171,10 @@ public class NineGridView extends ViewGroup implements ViewGroup.OnHierarchyChan
 
     public int getChildWidth() {
         return mChildWidth;
+    }
+
+    public int getSingleImageMaxWidth() {
+        return singleImageMaxWidth;
     }
 
     @Override

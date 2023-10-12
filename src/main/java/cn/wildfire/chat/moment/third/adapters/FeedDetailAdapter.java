@@ -15,7 +15,9 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
+import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.mm.MMPreviewActivity;
+import cn.wildfire.chat.kit.mm.MediaEntry;
 import cn.wildfire.chat.moment.third.Constants;
 import cn.wildfire.chat.moment.third.beans.CommentBean;
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
@@ -27,7 +29,6 @@ import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
 import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.CommentOrPraisePopupWindow;
-import cn.wildfire.chat.kit.R;
 
 /**
  * @author KCrason
@@ -183,7 +184,12 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 WordAndImagesViewHolder wordAndImagesViewHolder = (WordAndImagesViewHolder) holder;
                 wordAndImagesViewHolder.nineGridView.setOnImageClickListener((position1, view) ->
                     MMPreviewActivity.previewMedia(mContext, friendCircleBean.getMediaEntries(), position1));
-                wordAndImagesViewHolder.nineGridView.setAdapter(new NineImageAdapter(mContext, mRequestOptions,
+
+                if (friendCircleBean.getMediaEntries().size() == 1) {
+                    MediaEntry mediaEntry = friendCircleBean.getMediaEntries().get(0);
+                    wordAndImagesViewHolder.nineGridView.setSingleImageSize(mediaEntry.getWidth(), mediaEntry.getHeight());
+                }
+                wordAndImagesViewHolder.nineGridView.setAdapter(new NineImageAdapter(mContext, wordAndImagesViewHolder.nineGridView, mRequestOptions,
                     mDrawableTransitionOptions, friendCircleBean.getMediaEntries()));
             }
         }
