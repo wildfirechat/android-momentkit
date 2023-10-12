@@ -275,7 +275,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
     }
 
     private void loadOldFeeds() {
-        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getmFriendCircleBeans();
+        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getFriendCircleBeans();
         if (friendCircleBeans == null || friendCircleBeans.isEmpty()) {
             return;
         }

@@ -140,7 +140,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyItemChanged(0);
     }
 
-    public List<FriendCircleBean> getmFriendCircleBeans() {
+    public List<FriendCircleBean> getFriendCircleBeans() {
         return mFriendCircleBeans;
     }
 

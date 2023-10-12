@@ -141,7 +141,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
 
     @Override
     public void onPraiseClick(int position) {
-        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getmFriendCircleBeans();
+        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getFriendCircleBeans();
         FriendCircleBean friendCircleBean = friendCircleBeans.get(position);
         List<PraiseBean> praiseBeans = friendCircleBean.getPraiseBeans();
         PraiseBean praiseBean = new PraiseBean();
@@ -206,7 +206,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         int scrollBy = getCommentPanelTop() - itemView.getBottom();
         recyclerView.scrollBy(0, -scrollBy);
 
-        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getmFriendCircleBeans();
+        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getFriendCircleBeans();
         FriendCircleBean friendCircleBean = friendCircleBeans.get(position);
 
         showCommentFragment(friendCircleBean.getId(), 0);
@@ -219,7 +219,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
             return;
         }
 
-        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getmFriendCircleBeans();
+        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getFriendCircleBeans();
         FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
         List<CommentBean> commentBeans = friendCircleBean.getCommentBeans();
         CommentBean commentBean = commentBeans.get(commentPosition);
@@ -250,7 +250,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
     public void onCommentItemLongClick(View commentItemView, int feedPosition, int commentPosition) {
         int menuId = R.menu.comment_item_popup_menu;
 
-        CommentBean commentBean = mFriendCircleAdapter.getmFriendCircleBeans().get(feedPosition).getCommentBeans().get(commentPosition);
+        CommentBean commentBean = mFriendCircleAdapter.getFriendCircleBeans().get(feedPosition).getCommentBeans().get(commentPosition);
         if (commentBean.getChildUserId().equals(ChatManager.Instance().getUserId())) {
             //me
             menuId = R.menu.comment_item_delete_popup_menu;
@@ -272,7 +272,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
 
     @Override
     public void onFeedItemLongClick(View feedItemView, int feedPosition) {
-        FriendCircleBean friendCircleBean = mFriendCircleAdapter.getmFriendCircleBeans().get(feedPosition);
+        FriendCircleBean friendCircleBean = mFriendCircleAdapter.getFriendCircleBeans().get(feedPosition);
         int menuId;
         if (friendCircleBean.getUserBean().getUserId().equals(ChatManager.Instance().getUserId())) {
             menuId = R.menu.feed_item_delete_popup_menu;
@@ -415,7 +415,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
     }
 
     protected void deleteFeed(int feedPosition) {
-        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getmFriendCircleBeans();
+        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getFriendCircleBeans();
         FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
         MomentClient.getInstance().deleteFeed(user != null ? user.uid : null, friendCircleBean.getId(), new MomentClient.GeneralCallback() {
             @Override
@@ -432,7 +432,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
     }
 
     protected void deleteComment(int feedPosition, int commentPosition) {
-        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getmFriendCircleBeans();
+        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getFriendCircleBeans();
         FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
         List<CommentBean> commentBeans = friendCircleBean.getCommentBeans();
         CommentBean commentBean = commentBeans.get(commentPosition);
