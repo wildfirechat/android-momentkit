@@ -24,6 +24,7 @@ import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.moment.third.Constants;
 import cn.wildfire.chat.moment.third.beans.CommentBean;
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
+import cn.wildfire.chat.moment.third.beans.UserBean;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
@@ -232,6 +233,21 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
             this.mFriendCircleBeans.addAll(friendCircleBeans);
             notifyItemRangeInserted(mFriendCircleBeans.size(), friendCircleBeans.size());
+        }
+    }
+
+    public void updateUserInfo(List<UserInfo> userInfos) {
+        for (int i = 0; i < mFriendCircleBeans.size(); i++) {
+            FriendCircleBean friendCircleBean = mFriendCircleBeans.get(i);
+            UserBean userBean = friendCircleBean.getUserBean();
+            for (int j = 0; j < userInfos.size(); j++) {
+                UserInfo info = userInfos.get(j);
+                if (userBean.getUserId().equals(info.uid)) {
+                    friendCircleBean.setUserBean(UserBean.fromUserInfo(info));
+                    notifyItemChanged(i);
+                    break;
+                }
+            }
         }
     }
 

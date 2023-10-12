@@ -31,19 +31,21 @@ import cn.wildfire.chat.moment.third.utils.Utils;
 import cn.wildfire.chat.moment.third.widgets.TitleBar;
 import cn.wildfire.chat.moment.thirdbar.TitleBarAlphaChangeHelper;
 import cn.wildfirechat.message.Message;
+import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.moment.MomentClient;
 import cn.wildfirechat.moment.OnReceiveFeedMessageListener;
 import cn.wildfirechat.moment.message.FeedCommentMessageContent;
 import cn.wildfirechat.moment.model.Feed;
 import cn.wildfirechat.moment.model.Profile;
 import cn.wildfirechat.remote.ChatManager;
+import cn.wildfirechat.remote.OnUserInfoUpdateListener;
 import me.everything.android.ui.overscroll.IOverScrollDecor;
 import me.everything.android.ui.overscroll.IOverScrollState;
 import me.everything.android.ui.overscroll.IOverScrollStateListener;
 import me.everything.android.ui.overscroll.IOverScrollUpdateListener;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
-public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedMessageListener {
+public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedMessageListener, OnUserInfoUpdateListener {
 
     private ImageView refreshImageView;
     private TextView unreadFeedMessageCountTextView;
@@ -67,6 +69,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MomentClient.getInstance().setMomentMessageReceiveListener(this);
+        ChatManager.Instance().addUserInfoUpdateListener(this);
     }
 
     @Override
@@ -308,6 +311,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
     protected void onDestroy() {
         super.onDestroy();
         MomentClient.getInstance().setMomentMessageReceiveListener(null);
+        ChatManager.Instance().removeUserInfoUpdateListener(this);
     }
 
     @Override
@@ -438,6 +442,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
         updateUnreadFeedMessageCount();
     }
 
+
     private void updateFeed(long feedId) {
         if (this.feeds == null || this.feeds.isEmpty()) {
             // do nothing
@@ -490,5 +495,10 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
             unreadFeedMessageCountRelativeLayout.setVisibility(View.VISIBLE);
             unreadFeedMessageCountTextView.setText("您有" + messages.size() + "条未读消息");
         }
+    }
+
+    @Override
+    public void onUserInfoUpdate(List<UserInfo> userInfos) {
+        mFriendCircleAdapter.updateUserInfo(userInfos);
     }
 }

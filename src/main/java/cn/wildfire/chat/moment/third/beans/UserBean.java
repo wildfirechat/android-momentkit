@@ -1,5 +1,7 @@
 package cn.wildfire.chat.moment.third.beans;
 
+import cn.wildfirechat.model.UserInfo;
+
 public class UserBean {
     private String userAvatarUrl;
 
@@ -29,5 +31,13 @@ public class UserBean {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public static UserBean fromUserInfo(UserInfo userInfo) {
+        UserBean userBean = new UserBean();
+        userBean.setUserId(userInfo.uid);
+        userBean.setUserAvatarUrl(userInfo.portrait);
+        userBean.setUserName(userInfo.displayName);
+        return userBean;
     }
 }

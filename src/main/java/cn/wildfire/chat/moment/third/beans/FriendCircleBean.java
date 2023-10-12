@@ -60,12 +60,8 @@ public class FriendCircleBean {
 
         friendCircleBean.setContent(feed.text);
 
-        UserBean userBean = new UserBean();
         UserInfo userInfo = ChatManager.Instance().getUserInfo(feed.sender, false);
-        userBean.setUserId(feed.sender);
-        userBean.setUserAvatarUrl(userInfo.portrait);
-        userBean.setUserName(userInfo.displayName);
-        friendCircleBean.userBean = userBean;
+        friendCircleBean.userBean = UserBean.fromUserInfo(userInfo);
 
         // sort?
         if (feed.comments != null && feed.comments.size() > 0) {
@@ -115,7 +111,7 @@ public class FriendCircleBean {
             }
             friendCircleBean.mediaEntries = mediaEntries;
         }
-        friendCircleBean.otherInfoBean =  new OtherInfoBean();
+        friendCircleBean.otherInfoBean = new OtherInfoBean();
         friendCircleBean.otherInfoBean.setTime(TimeUtils.getMsgFormatTime(feed.serverTime));
 
         return friendCircleBean;
@@ -191,7 +187,7 @@ public class FriendCircleBean {
 
     public void setContent(String content) {
         this.content = content;
-        if(!TextUtils.isEmpty(content)){
+        if (!TextUtils.isEmpty(content)) {
             setContentSpan(new SpannableStringBuilder(content));
         }
     }
