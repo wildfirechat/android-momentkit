@@ -74,13 +74,13 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
 
     @Override
     protected int contentLayoutResId() {
-        return R.layout.activity_main;
+        return R.layout.moment_activity_main;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        View view = getLayoutInflater().inflate(R.layout.circle_host_header, recyclerView, false);
+        View view = getLayoutInflater().inflate(R.layout.moment_circle_host_header, recyclerView, false);
         view.setOnClickListener(v -> onUnreadFeedMessageCountClick());
         HostViewHolder headerViewHolder = new HostViewHolder(view);
         unreadFeedMessageCountRelativeLayout = view.findViewById(R.id.unreadFeedMessageCountRelativeLayout);

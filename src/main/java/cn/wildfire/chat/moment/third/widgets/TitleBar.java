@@ -131,7 +131,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener, View.
 
     private void initView(Context context) {
 
-        View.inflate(context, R.layout.widget_title_bar, this);
+        View.inflate(context, R.layout.moment_widget_title_bar, this);
         root = findViewById(R.id.title_bar_root);
         ll_left = findViewById(R.id.ll_title_bar_left);
         iv_left = findViewById(R.id.ic_title_bar_left);

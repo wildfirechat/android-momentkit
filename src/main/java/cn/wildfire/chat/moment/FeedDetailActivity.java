@@ -22,7 +22,7 @@ public class FeedDetailActivity extends BaseFeedActivity {
 
     @Override
     protected int contentLayoutResId() {
-        return R.layout.activity_detail;
+        return R.layout.moment_activity_detail;
     }
 
     @Override

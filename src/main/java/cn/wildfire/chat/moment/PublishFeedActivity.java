@@ -63,7 +63,7 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publish);
+        setContentView(R.layout.moment_activity_publish);
         bindViews();
         init();
     }

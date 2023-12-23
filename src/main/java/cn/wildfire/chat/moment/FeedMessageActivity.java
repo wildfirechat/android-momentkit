@@ -24,7 +24,7 @@ public class FeedMessageActivity extends BaseTitleBarActivity implements OnFeedU
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+        setContentView(R.layout.moment_activity_message);
         init();
     }
 

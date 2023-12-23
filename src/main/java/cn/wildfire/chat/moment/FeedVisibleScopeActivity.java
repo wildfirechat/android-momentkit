@@ -38,7 +38,7 @@ public class FeedVisibleScopeActivity extends BaseTitleBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.feed_visible_scope_activity);
+        setContentView(R.layout.moment_feed_visible_scope_activity);
         bindViews();
         init();
     }

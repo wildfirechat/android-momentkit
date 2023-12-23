@@ -32,9 +32,9 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <include layout="@layout/include_item_recycler_content" />
+        <include layout="@layout/moment_include_item_recycler_content" />
 
-        <include layout="@layout/view_translation_layout" />
+        <include layout="@layout/moment_view_translation_layout" />
 
         <cn.wildfire.chat.moment.third.widgets.NineGridView
             android:id="@+id/nine_grid_view"
@@ -44,11 +44,11 @@
             android:layout_marginRight="45dp"
             android:layout_marginBottom="10dp" />
 
-        <include layout="@layout/include_item_recycler_location" />
+        <include layout="@layout/moment_include_item_recycler_location" />
 
-        <include layout="@layout/include_item_recycler_time" />
+        <include layout="@layout/moment_include_item_recycler_time" />
 
-        <include layout="@layout/include_item_recycler_praise_and_comment" />
+        <include layout="@layout/moment_include_item_recycler_praise_and_comment" />
 
     </LinearLayout>
 

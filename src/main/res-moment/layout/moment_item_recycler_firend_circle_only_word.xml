@@ -26,15 +26,15 @@
             android:textColor="#697A9F"
             android:textSize="16sp" />
 
-        <include layout="@layout/include_item_recycler_content" />
+        <include layout="@layout/moment_include_item_recycler_content" />
 
-        <include layout="@layout/view_translation_layout" />
+        <include layout="@layout/moment_view_translation_layout" />
 
-        <include layout="@layout/include_item_recycler_location" />
+        <include layout="@layout/moment_include_item_recycler_location" />
 
-        <include layout="@layout/include_item_recycler_time" />
+        <include layout="@layout/moment_include_item_recycler_time" />
 
-        <include layout="@layout/include_item_recycler_praise_and_comment" />
+        <include layout="@layout/moment_include_item_recycler_praise_and_comment" />
 
         <View
             android:id="@+id/padingView"

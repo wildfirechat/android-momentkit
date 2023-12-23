@@ -226,7 +226,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
 
         if (commentBean.getChildUserId().equals(ChatManager.Instance().getUserId())) {
             PopupMenu popup = new PopupMenu(this, commentItemView);
-            popup.getMenuInflater().inflate(R.menu.comment_item_delete_popup_menu, popup.getMenu());
+            popup.getMenuInflater().inflate(R.menu.moment_comment_item_delete_popup_menu, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.delete) {
                     deleteComment(feedPosition, commentPosition);
@@ -248,12 +248,12 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
 
     @Override
     public void onCommentItemLongClick(View commentItemView, int feedPosition, int commentPosition) {
-        int menuId = R.menu.comment_item_popup_menu;
+        int menuId = R.menu.moment_comment_item_popup_menu;
 
         CommentBean commentBean = mFriendCircleAdapter.getFriendCircleBeans().get(feedPosition).getCommentBeans().get(commentPosition);
         if (commentBean.getChildUserId().equals(ChatManager.Instance().getUserId())) {
             //me
-            menuId = R.menu.comment_item_delete_popup_menu;
+            menuId = R.menu.moment_comment_item_delete_popup_menu;
         }
         PopupMenu popup = new PopupMenu(this, commentItemView);
         popup.getMenuInflater().inflate(menuId, popup.getMenu());
@@ -275,9 +275,9 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         FriendCircleBean friendCircleBean = mFriendCircleAdapter.getFriendCircleBeans().get(feedPosition);
         int menuId;
         if (friendCircleBean.getUserBean().getUserId().equals(ChatManager.Instance().getUserId())) {
-            menuId = R.menu.feed_item_delete_popup_menu;
+            menuId = R.menu.moment_feed_item_delete_popup_menu;
         } else {
-            menuId = R.menu.feed_item_popup_menu;
+            menuId = R.menu.moment_feed_item_popup_menu;
         }
         PopupMenu popup = new PopupMenu(this, feedItemView);
         popup.getMenuInflater().inflate(menuId, popup.getMenu());

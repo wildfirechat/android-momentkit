@@ -24,7 +24,7 @@ public class CommentOrPraisePopupWindow extends PopupWindow implements View.OnCl
     private TextView praiseTextView;
 
     public CommentOrPraisePopupWindow(Context context) {
-        View contentView = LayoutInflater.from(context).inflate(R.layout.popup_window_praise_or_comment_view, null);
+        View contentView = LayoutInflater.from(context).inflate(R.layout.moment_popup_window_praise_or_comment_view, null);
         this.setContentView(contentView);
         praiseTextView = contentView.findViewById(R.id.praiseTextView);
         contentView.findViewById(R.id.layout_praise).setOnClickListener(this);

@@ -39,7 +39,7 @@ public class CommentFragment extends Fragment implements KeyboardAwareLinearLayo
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.comment_fragment, container, false);
+        View view = inflater.inflate(R.layout.moment_comment_fragment, container, false);
         inputAwareLayout = view.findViewById(R.id.rootInputAwareLayout);
         inputAwareLayout.addOnKeyboardHiddenListener(this);
         inputAwareLayout.addOnKeyboardShownListener(this);

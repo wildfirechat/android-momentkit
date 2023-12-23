@@ -258,22 +258,22 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (viewType == Constants.FriendCircleType.FRIEND_CIRCLE_TYPE_HEADER) {
             return headerViewHolder;
         } else if (viewType == Constants.FriendCircleType.FRIEND_CIRCLE_TYPE_ONLY_WORD) {
-            holder = new OnlyWordViewHolder(mLayoutInflater.inflate(R.layout.item_recycler_firend_circle_only_word, parent, false));
+            holder = new OnlyWordViewHolder(mLayoutInflater.inflate(R.layout.moment_item_recycler_firend_circle_only_word, parent, false));
         } else if (viewType == Constants.FriendCircleType.FRIEND_CIRCLE_TYPE_WORD_AND_URL) {
-            holder = new WordAndUrlViewHolder(mLayoutInflater.inflate(R.layout.item_recycler_firend_circle_word_and_url, parent, false));
+            holder = new WordAndUrlViewHolder(mLayoutInflater.inflate(R.layout.moment_item_recycler_firend_circle_word_and_url, parent, false));
         } else if (viewType == Constants.FriendCircleType.FRIEND_CIRCLE_TYPE_WORD_AND_IMAGES) {
-            holder = new WordAndImagesViewHolder(mLayoutInflater.inflate(R.layout.item_recycler_firend_circle_word_and_images, parent, false));
-        } else if (viewType == R.layout.feed_item_loading) {
+            holder = new WordAndImagesViewHolder(mLayoutInflater.inflate(R.layout.moment_item_recycler_firend_circle_word_and_images, parent, false));
+        } else if (viewType == R.layout.moment_feed_item_loading) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View itemView = layoutInflater.inflate(R.layout.feed_item_loading, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.moment_feed_item_loading, parent, false);
             holder = new LoadingViewHolder(itemView);
-        } else if (viewType == R.layout.feed_item_visible_scope) {
+        } else if (viewType == R.layout.moment_feed_item_visible_scope) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View itemView = layoutInflater.inflate(R.layout.feed_item_visible_scope, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.moment_feed_item_visible_scope, parent, false);
             holder = new VisibleScopeViewHolder(itemView);
-        } else if (viewType == R.layout.feed_item_bottom_padding) {
+        } else if (viewType == R.layout.moment_feed_item_bottom_padding) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View itemView = layoutInflater.inflate(R.layout.feed_item_bottom_padding, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.moment_feed_item_bottom_padding, parent, false);
             holder = new BottomPaddingViewHolder(itemView);
 
         }
@@ -379,13 +379,13 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             int type = 0;
             switch (lastItemType) {
                 case LAST_ITEM_TYPE_LOADING:
-                    type = R.layout.feed_item_loading;
+                    type = R.layout.moment_feed_item_loading;
                     break;
                 case LAST_ITEM_TYPE_VISIBLE_SCOPE:
-                    type = R.layout.feed_item_visible_scope;
+                    type = R.layout.moment_feed_item_visible_scope;
                     break;
                 case LAST_ITEM_TYPE_BOTTOM_PADDING:
-                    type = R.layout.feed_item_bottom_padding;
+                    type = R.layout.moment_feed_item_bottom_padding;
                     break;
                 default:
                     break;

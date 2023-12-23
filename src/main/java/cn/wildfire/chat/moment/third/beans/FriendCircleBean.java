@@ -42,7 +42,7 @@ public class FriendCircleBean {
         friendCircleBean.id = feed.feedId;
         switch (feed.type) {
             case FeedContentType.Content_Text_Type:
-                // TODO R.layout.item_recycler_firend_circle_word_and_url;
+                // TODO R.layout.moment_item_recycler_firend_circle_word_and_url;
                 friendCircleBean.viewType = Constants.FriendCircleType.FRIEND_CIRCLE_TYPE_ONLY_WORD;
                 break;
             case FeedContentType.Content_Image_Type:

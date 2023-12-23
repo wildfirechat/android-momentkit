@@ -134,18 +134,18 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
         if (viewType == Constants.FriendCircleType.FRIEND_CIRCLE_TYPE_ONLY_WORD) {
-            holder = new OnlyWordViewHolder(mLayoutInflater.inflate(R.layout.item_recycler_firend_circle_only_word, parent, false));
+            holder = new OnlyWordViewHolder(mLayoutInflater.inflate(R.layout.moment_item_recycler_firend_circle_only_word, parent, false));
         } else if (viewType == Constants.FriendCircleType.FRIEND_CIRCLE_TYPE_WORD_AND_URL) {
-            holder = new WordAndUrlViewHolder(mLayoutInflater.inflate(R.layout.item_recycler_firend_circle_word_and_url, parent, false));
+            holder = new WordAndUrlViewHolder(mLayoutInflater.inflate(R.layout.moment_item_recycler_firend_circle_word_and_url, parent, false));
         } else if (viewType == Constants.FriendCircleType.FRIEND_CIRCLE_TYPE_WORD_AND_IMAGES) {
-            holder = new WordAndImagesViewHolder(mLayoutInflater.inflate(R.layout.item_recycler_firend_circle_word_and_images, parent, false));
-        } else if (viewType == R.layout.feed_item_loading) {
+            holder = new WordAndImagesViewHolder(mLayoutInflater.inflate(R.layout.moment_item_recycler_firend_circle_word_and_images, parent, false));
+        } else if (viewType == R.layout.moment_feed_item_loading) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View itemView = layoutInflater.inflate(R.layout.feed_item_loading, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.moment_feed_item_loading, parent, false);
             holder = new LoadingViewHolder(itemView);
-        } else if (viewType == R.layout.feed_item_visible_scope) {
+        } else if (viewType == R.layout.moment_feed_item_visible_scope) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View itemView = layoutInflater.inflate(R.layout.feed_item_visible_scope, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.moment_feed_item_visible_scope, parent, false);
             holder = new VisibleScopeViewHolder(itemView);
         }
         if (holder instanceof BaseFriendCircleViewHolder) {
@@ -200,7 +200,7 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (position == 0) {
             return friendCircleBean.getViewType();
         } else {
-            return R.layout.feed_item_loading;
+            return R.layout.moment_feed_item_loading;
         }
     }
 

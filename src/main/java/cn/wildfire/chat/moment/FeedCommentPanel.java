@@ -79,7 +79,7 @@ public class FeedCommentPanel extends FrameLayout implements IEmotionSelectedLis
     }
 
     public void init(CommentFragment commentFragment, InputAwareLayout rootInputAwareLayout) {
-        LayoutInflater.from(getContext()).inflate(R.layout.feed_comment_panel, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.moment_feed_comment_panel, this, true);
         bindViews();
 
         this.commentFragment = commentFragment;
