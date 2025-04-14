@@ -369,6 +369,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
             startActivityForResult(intent, REQUEST_CODE_PUBLISH_FEED);
         } else if (requestCode == REQUEST_CODE_PICK_PHOTO) {
             ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+            boolean compress = data.getBooleanExtra(ImagePicker.EXTRA_COMPRESS, true);
             if (images == null || images.isEmpty()) {
                 Toast.makeText(this, "no image picked", Toast.LENGTH_SHORT).show();
                 return;
@@ -380,6 +381,7 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
 
             Intent intent = new Intent(this, PublishFeedActivity.class);
             intent.putExtra(PublishFeedActivity.IMAGE_URLS, imageUrls);
+            intent.putExtra(PublishFeedActivity.IMAGE_COMPRESS, compress);
             startActivityForResult(intent, REQUEST_CODE_PUBLISH_FEED);
         } else if (requestCode == REQUEST_CODE_PICK_PROFILE_BACKGROUND_PHOTO) {
             ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);

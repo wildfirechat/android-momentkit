@@ -29,6 +29,7 @@ import java.util.List;
 import cn.wildfire.chat.kit.Config;
 import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.contact.pick.PickContactActivity;
+import cn.wildfire.chat.kit.third.utils.ImageUtils;
 import cn.wildfire.chat.kit.widget.OptionItemView;
 import cn.wildfire.chat.moment.third.widgets.NineGridView;
 import cn.wildfire.chat.moment.thirdbar.BaseTitleBarActivity;
@@ -49,6 +50,7 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
 
     public static final String VIDEO_URL = "video_url";
     public static final String IMAGE_URLS = "image_urls";
+    public static final String IMAGE_COMPRESS = "image_compress";
     private String videoPath = null;
 
     private static final int REQUEST_CODE_PICK_IMAGE = 100;
@@ -59,6 +61,7 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
     private ArrayList<String> blockUids = new ArrayList<>();
     private ArrayList<String> toUids = new ArrayList<>();
     private int mode;
+    private boolean comporess = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,7 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
 
     private void init() {
         videoPath = getIntent().getStringExtra(VIDEO_URL);
+        comporess = getIntent().getBooleanExtra(IMAGE_COMPRESS, true);
         ArrayList<String> imageUrls = getIntent().getStringArrayListExtra(IMAGE_URLS);
         if (!TextUtils.isEmpty(videoPath) || (imageUrls != null && !imageUrls.isEmpty())) {
             nineGridAdapter = new FeedMediaContentAdapter(this, new RequestOptions().centerCrop(), DrawableTransitionOptions.withCrossFade());
@@ -284,14 +288,25 @@ public class PublishFeedActivity extends BaseTitleBarActivity implements NineGri
                 } else if (nineGridAdapter.getImageUrls().size() > 0) {
                     feed.type = FeedContentType.Content_Image_Type;
                     for (String imagePath : nineGridAdapter.getImageUrls()) {
+                        if (comporess) {
+                            File compressedImgFile = ImageUtils.compressImage(imagePath);
+                            imagePath = compressedImgFile == null ? imagePath : compressedImgFile.getPath();
+                        }
+                        File imageFileThumb = ImageUtils.genThumbImgFile(imagePath);
                         String imageUrl = MomentClient.uploadMediaSync(imagePath);
+                        String thumbnailUrl = null;
+                        if (imageFileThumb != null) {
+                            thumbnailUrl = MomentClient.uploadMediaSync(imageFileThumb.getPath());
+                        }
+
                         if (imageUrl != null) {
                             FeedEntry feedEntry = new FeedEntry();
                             feedEntry.mediaUrl = imageUrl;
+                            feedEntry.thumbUrl = thumbnailUrl;
 
                             BitmapFactory.Options options = new BitmapFactory.Options();
                             options.inJustDecodeBounds = true;
-                            BitmapFactory.decodeFile(videoPath, options);
+                            BitmapFactory.decodeFile(imagePath, options);
                             int outHeight = options.outHeight;
                             feedEntry.mediaWidth = options.outWidth;
                             feedEntry.mediaHeight = outHeight;
