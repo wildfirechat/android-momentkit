@@ -24,23 +24,24 @@
 本仓库是野火IM Android端朋友圈UI相关代码，依赖于```moment client```库，```moment client```库是闭源的，需要购买才能使用。
 
 ## 编译
-0. ***请严格按照以下步骤进行，否则会编译不过，或者运行时出现错误。***
+1. ***请严格按照以下步骤进行，否则会编译不过，或者运行时出现错误。***
 
-1. 联系官方，购买```moment client aar```相关授权。
+2. 联系官方，购买```moment client aar```相关授权。
 
-2. 将***本仓库***下载到和```android-chat```的同级目录，并确保***本仓库***下载之后的目录名字是```android-momentkit```，***比如```android-chat```和```android-momentkit```都在```workspace```目录之下，不是将```android-momentkit```放到```android-chat```目录之下***
+3. 将***本仓库***下载到和```android-chat```的同级目录，并确保***本仓库***下载之后的目录名字是```android-momentkit```，***比如```android-chat```和```android-momentkit```都在```workspace```目录之下，不是将```android-momentkit```放到```android-chat```目录之下***
 
-3. 将第一步中获取到的```momentclient-release.aar```放到```android-chat/uikit/libs```目录下
-4. 修改```android-chat/uikit/build.gradle```，将以下部分取消注释：
+4. 将第一步中获取到的```momentclient-release.aar```放到```android-chat/momentclient/```目录下
+5. 修复`android-chat/setting.gradle`，将`//':momentclient',`前的`//`去掉
+6. 修改```android-chat/uikit/build.gradle```，将以下部分取消注释：
 
       ```
       //            java.srcDirs += ['../../android-momentkit/src/main/java']
       //            res.srcDirs += ['../../android-momentkit/src/main/res-moment']
-
-      //    api 'me.everything:overscroll-decor-android:1.0.4'
+      // ....
+      // implementation project(':momentclient')
       ```
 
-5. 修改```android-chat/uikit/src/main/AndroidManifest.xml```，将以下取消注释：
+7. 修改```android-chat/uikit/src/main/AndroidManifest.xml```，将以下取消注释：
 
       ```
       <!--        <activity android:name="cn.wildfire.chat.moment.PublishFeedActivity" />-->
@@ -55,9 +56,8 @@
       <!--        <activity android:name="cn.wildfire.chat.moment.FeedVisibleScopeActivity" />-->
 
       ```
-6. 如果是命令打包的话，请执行如下命令，其中```chat```是```applicaiton module```的名字，需根据实际情况修改
+8. 返回`android-chat`进行开发、调试及打包
 
-   ```./gradlew build -p chat```
 ## 感谢
 
 本项目基于[HighPerformanceFriendsCircle](https://github.com/Micrason/HighPerformanceFriendsCircle)和[MultiWeChat](https://github.com/MsPenghao/MultiWeChat)开发，在此，对他们的无私奉献表示感谢。
