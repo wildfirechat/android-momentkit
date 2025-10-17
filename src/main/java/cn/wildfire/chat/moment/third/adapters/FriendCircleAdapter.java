@@ -311,7 +311,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 } else if (holder instanceof WordAndUrlViewHolder) {
                     WordAndUrlViewHolder wordAndUrlViewHolder = (WordAndUrlViewHolder) holder;
                     wordAndUrlViewHolder.layoutUrl.setOnClickListener(v -> Toast.makeText(mContext, "You Click Layout Url", Toast.LENGTH_SHORT).show());
-                } else if (holder instanceof WordAndImagesViewHolder) {
+                } else if (holder instanceof WordAndImagesViewHolder && friendCircleBean.getMediaEntries() != null) {
                     WordAndImagesViewHolder wordAndImagesViewHolder = (WordAndImagesViewHolder) holder;
                     wordAndImagesViewHolder.nineGridView.setOnImageClickListener((position1, view) ->
                         MMPreviewActivity.previewMedia(mContext, friendCircleBean.getMediaEntries(), position1, false));
