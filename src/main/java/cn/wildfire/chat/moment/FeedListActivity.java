@@ -1,5 +1,6 @@
 package cn.wildfire.chat.moment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -39,6 +40,7 @@ import cn.wildfirechat.moment.model.Feed;
 import cn.wildfirechat.moment.model.Profile;
 import cn.wildfirechat.remote.ChatManager;
 import cn.wildfirechat.remote.OnUserInfoUpdateListener;
+import cn.wildfirechat.uikit.permission.PermissionKit;
 import me.everything.android.ui.overscroll.IOverScrollDecor;
 import me.everything.android.ui.overscroll.IOverScrollState;
 import me.everything.android.ui.overscroll.IOverScrollStateListener;
@@ -427,8 +429,16 @@ public class FeedListActivity extends BaseFeedActivity implements OnReceiveFeedM
     }
 
     private void takeShortVideo() {
-        Intent intent = new Intent(this, TakePhotoActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_RECORDER_VIDEO);
+        String[] permissions = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
+        PermissionKit.PermissionReqTuple[] tuples = PermissionKit.buildRequestPermissionTuples(this, permissions);
+        PermissionKit.checkThenRequestPermission(this, getSupportFragmentManager(), tuples, granted -> {
+            if (granted) {
+                Intent intent = new Intent(this, TakePhotoActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_RECORDER_VIDEO);
+            } else {
+                Toast.makeText(this, "请打开相机和麦克风权限", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
