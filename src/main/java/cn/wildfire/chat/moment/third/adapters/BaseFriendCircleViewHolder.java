@@ -15,18 +15,20 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
+import cn.wildfire.chat.kit.R;
 import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
 import cn.wildfire.chat.moment.third.beans.OtherInfoBean;
 import cn.wildfire.chat.moment.third.beans.UserBean;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
+import cn.wildfire.chat.moment.third.interfaces.OnDeleteFeedClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
 import cn.wildfire.chat.moment.third.span.TextMovementMethod;
 import cn.wildfire.chat.moment.third.utils.SpanUtils;
 import cn.wildfire.chat.moment.third.widgets.VerticalCommentWidget;
-import cn.wildfire.chat.kit.R;
+import cn.wildfirechat.remote.ChatManager;
 
 class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,6 +39,7 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
     public ImageView imgAvatar;
     public TextView txtSource;
     public TextView txtPublishTime;
+    public ImageView deleteIcon;
     public ImageView imgPraiseOrComment;
     public TextView txtLocation;
     public TextView txtContent;
@@ -57,6 +60,7 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
         imgAvatar = itemView.findViewById(R.id.img_avatar);
         txtSource = itemView.findViewById(R.id.txt_source);
         txtPublishTime = itemView.findViewById(R.id.txt_publish_time);
+        deleteIcon = itemView.findViewById(R.id.img_del);
         imgPraiseOrComment = itemView.findViewById(R.id.img_click_praise_or_comment);
         txtLocation = itemView.findViewById(R.id.txt_location);
         txtContent = itemView.findViewById(R.id.txt_content);
@@ -75,6 +79,7 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
                                  OnFeedItemLongClickListener onFeedItemLongClickListener,
                                  OnFeedUserClickListener onFeedUserClickListener,
                                  OnCommentUserClickListener onCommentUserClickListener,
+                                 OnDeleteFeedClickListener onDeleteFeedClickListener,
                                  OnTogglePraiseOrCommentPopupWindowListener onTogglePraiseOrCommentPopupWindowListener) {
         this.mContext = context;
         if (!onlyPraise && !onlyComment) {
@@ -108,6 +113,19 @@ class BaseFriendCircleViewHolder extends RecyclerView.ViewHolder {
                 Glide.with(mContext).load(userBean.getUserAvatarUrl())
                     .apply(mRequestOptions)
                     .into(holder.imgAvatar);
+
+                if (userBean.getUserId().equals(ChatManager.Instance().getUserId())) {
+                    deleteIcon.setVisibility(View.VISIBLE);
+                    deleteIcon.setOnClickListener(v -> {
+                        if (onDeleteFeedClickListener != null) {
+                            onDeleteFeedClickListener.onDeleteFeedClick(position);
+                        }
+                    });
+                } else {
+                    deleteIcon.setVisibility(View.GONE);
+                }
+            } else {
+                deleteIcon.setVisibility(View.GONE);
             }
 
             OtherInfoBean otherInfoBean = friendCircleBean.getOtherInfoBean();

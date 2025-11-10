@@ -29,6 +29,7 @@ import cn.wildfire.chat.moment.third.beans.UserBean;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
+import cn.wildfire.chat.moment.third.interfaces.OnDeleteFeedClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
@@ -61,6 +62,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private OnCommentItemLongClickListener onCommentItemLongClickListener;
     private OnFeedItemLongClickListener onFeedItemLongClickListener;
     private OnCommentUserClickListener onCommentUserClickListener;
+    private OnDeleteFeedClickListener onDeleteFeedClickListener;
     private OnFeedUserClickListener onFeedUserClickListener;
 
     private LinearLayoutManager mLayoutManager;
@@ -108,6 +110,10 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setOnCommentUserClickListener(OnCommentUserClickListener onCommentUserClickListener) {
         this.onCommentUserClickListener = onCommentUserClickListener;
+    }
+
+    public void setOnDeleteFeedClickListener(OnDeleteFeedClickListener onDeleteFeedClickListener) {
+        this.onDeleteFeedClickListener = onDeleteFeedClickListener;
     }
 
     public void setOnFeedUserClickListener(OnFeedUserClickListener onFeedUserClickListener) {
@@ -305,7 +311,7 @@ public class FriendCircleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             position -= headerCount();
             if (mFriendCircleBeans != null && position < mFriendCircleBeans.size()) {
                 FriendCircleBean friendCircleBean = mFriendCircleBeans.get(position);
-                ((BaseFriendCircleViewHolder) holder).makeUserBaseData((BaseFriendCircleViewHolder) holder, mContext, friendCircleBean, position, onlyUpdatePraiseOrComment, onlyUpdatePraiseOrComment, onFeedItemLongClickListener, onFeedUserClickListener, onCommentUserClickListener, onTogglePraiseOrCommentPopupWindowListener);
+                ((BaseFriendCircleViewHolder) holder).makeUserBaseData((BaseFriendCircleViewHolder) holder, mContext, friendCircleBean, position, onlyUpdatePraiseOrComment, onlyUpdatePraiseOrComment, onFeedItemLongClickListener, onFeedUserClickListener, onCommentUserClickListener, onDeleteFeedClickListener, onTogglePraiseOrCommentPopupWindowListener);
                 if (holder instanceof OnlyWordViewHolder) {
                     OnlyWordViewHolder onlyWordViewHolder = (OnlyWordViewHolder) holder;
                 } else if (holder instanceof WordAndUrlViewHolder) {

@@ -6,6 +6,7 @@
 
     <item
         android:id="@+id/collection"
+        android:visible="false"
         android:title="收藏" />
 
 </menu>

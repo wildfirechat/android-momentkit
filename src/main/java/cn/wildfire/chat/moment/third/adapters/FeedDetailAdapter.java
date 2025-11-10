@@ -24,6 +24,7 @@ import cn.wildfire.chat.moment.third.beans.FriendCircleBean;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
+import cn.wildfire.chat.moment.third.interfaces.OnDeleteFeedClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnTogglePraiseOrCommentPopupWindowListener;
@@ -55,6 +56,7 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private OnCommentItemLongClickListener onCommentItemLongClickListener;
     private OnFeedItemLongClickListener onFeedItemLongClickListener;
     private OnCommentUserClickListener onCommentUserClickListener;
+    private OnDeleteFeedClickListener onDeleteFeedClickListener;
     private OnFeedUserClickListener onFeedUserClickListener;
 
     private LinearLayoutManager mLayoutManager;
@@ -174,7 +176,7 @@ public class FeedDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof BaseFriendCircleViewHolder) {
             // header
             position--;
-            ((BaseFriendCircleViewHolder) holder).makeUserBaseData((BaseFriendCircleViewHolder) holder, mContext, friendCircleBean, position, onlyUpdatePraiseOrComment, onlyUpdatePraiseOrComment, onFeedItemLongClickListener, onFeedUserClickListener, onCommentUserClickListener, onTogglePraiseOrCommentPopupWindowListener);
+            ((BaseFriendCircleViewHolder) holder).makeUserBaseData((BaseFriendCircleViewHolder) holder, mContext, friendCircleBean, position, onlyUpdatePraiseOrComment, onlyUpdatePraiseOrComment, onFeedItemLongClickListener, onFeedUserClickListener, onCommentUserClickListener, onDeleteFeedClickListener, onTogglePraiseOrCommentPopupWindowListener);
             if (holder instanceof OnlyWordViewHolder) {
                 OnlyWordViewHolder onlyWordViewHolder = (OnlyWordViewHolder) holder;
             } else if (holder instanceof WordAndUrlViewHolder) {

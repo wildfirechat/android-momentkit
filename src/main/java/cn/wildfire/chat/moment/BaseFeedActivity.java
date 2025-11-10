@@ -1,6 +1,7 @@
 package cn.wildfire.chat.moment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +28,7 @@ import cn.wildfire.chat.moment.third.beans.PraiseBean;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnCommentUserClickListener;
+import cn.wildfire.chat.moment.third.interfaces.OnDeleteFeedClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedItemLongClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnFeedUserClickListener;
 import cn.wildfire.chat.moment.third.interfaces.OnPraiseOrCommentClickListener;
@@ -44,7 +48,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
     OnCommentUserClickListener,
     OnFeedUserClickListener,
     OnCommentItemLongClickListener,
-    OnFeedItemLongClickListener {
+    OnFeedItemLongClickListener, OnDeleteFeedClickListener {
 
     protected FriendCircleAdapter mFriendCircleAdapter;
     protected RecyclerView recyclerView;
@@ -88,6 +92,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         mFriendCircleAdapter.setOnCommentItemLongClickListener(this);
         mFriendCircleAdapter.setOnFeedItemLongClickListener(this);
         mFriendCircleAdapter.setOnCommentUserClickListener(this);
+        mFriendCircleAdapter.setOnDeleteFeedClickListener(this);
         mFriendCircleAdapter.setOnFeedUserClickListener(this);
         mFriendCircleAdapter.setOnPraiseOrCommentClickListener(this::toggleCommentOrPraisePopupWindow);
         recyclerView.setAdapter(mFriendCircleAdapter);
@@ -271,14 +276,22 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
     }
 
     @Override
+    public void onDeleteFeedClick(int feedPosition) {
+        new MaterialDialog.Builder(this)
+            .content("删除该朋友圈")
+            .positiveText("删除")
+            .positiveColor(Color.RED)
+            .negativeText("取消")
+            .onPositive((dialog, which) -> deleteFeed(feedPosition))
+            .build()
+            .show();
+    }
+
+
+    @Override
     public void onFeedItemLongClick(View feedItemView, int feedPosition) {
-        FriendCircleBean friendCircleBean = mFriendCircleAdapter.getFriendCircleBeans().get(feedPosition);
         int menuId;
-        if (friendCircleBean.getUserBean().getUserId().equals(ChatManager.Instance().getUserId())) {
-            menuId = R.menu.moment_feed_item_delete_popup_menu;
-        } else {
-            menuId = R.menu.moment_feed_item_popup_menu;
-        }
+        menuId = R.menu.moment_feed_item_popup_menu;
         PopupMenu popup = new PopupMenu(this, feedItemView);
         popup.getMenuInflater().inflate(menuId, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
@@ -420,6 +433,9 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         MomentClient.getInstance().deleteFeed(user != null ? user.uid : null, friendCircleBean.getId(), new MomentClient.GeneralCallback() {
             @Override
             public void onSuccess() {
+                if (isFinishing()) {
+                    return;
+                }
                 friendCircleBeans.remove(feedPosition);
                 mFriendCircleAdapter.notifyItemRemoved(feedPosition + mFriendCircleAdapter.headerCount());
             }
@@ -490,6 +506,5 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
             mCommentOrPraisePopupWindow.showPopupWindow(anchorView);
         }
     }
-
 }
 
