@@ -1,9 +1,13 @@
 package cn.wildfire.chat.moment;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -297,7 +301,7 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
         popup.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.copy) {
-                Toast.makeText(this, "copy", Toast.LENGTH_SHORT).show();
+                copy(feedPosition);
             } else if (itemId == R.id.collection) {
             } else if (itemId == R.id.delete) {
                 deleteFeed(feedPosition);
@@ -305,6 +309,22 @@ public abstract class BaseFeedActivity extends BaseTitleBarActivity implements
             return true;
         });
         popup.show(); //showing popup menu
+    }
+
+    private void copy(int feedPosition) {
+        ClipboardManager clipboardManager = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboardManager == null) {
+            return;
+        }
+
+        List<FriendCircleBean> friendCircleBeans = mFriendCircleAdapter.getFriendCircleBeans();
+        FriendCircleBean friendCircleBean = friendCircleBeans.get(feedPosition);
+
+        String content = friendCircleBean.getContent();
+        if (!TextUtils.isEmpty(content)) {
+            ClipData clipData = ClipData.newPlainText("feedContent", content);
+            clipboardManager.setPrimaryClip(clipData);
+        }
     }
 
     private void showCommentFragment(long feedId, long commentId) {
